@@ -1,4 +1,4 @@
-import React, { lazy, useMemo, useEffect, Suspense } from 'react';
+import React, { lazy, useMemo, useEffect, useState, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 import ProtectedRoute from '../guards/ProtectedRoute';
 import RoleGuard from '../guards/RoleGuard';
@@ -52,11 +52,31 @@ const AdminModule = lazy(() => import('../../modules/admin/routes/index'));
 const DeliveryModule = lazy(() => import('../../modules/delivery/routes/index'));
 
 import CustomerLayout from '../../modules/customer/components/layout/CustomerLayout';
+import CustomerSplash from '../../modules/customer/pages/CustomerSplash';
+import CustomerOnboarding from '../../modules/customer/pages/CustomerOnboarding';
 
 const CustomerLayoutWrapper = () => {
+    const [splashState, setSplashState] = useState('initial'); // 'initial' | 'onboarding' | 'done'
+
     useEffect(() => {
         setActiveRole(ROLES.CUSTOMER);
+        
+        // Show first splash screen for 2.5 seconds on initial load
+        const splashTimer = setTimeout(() => {
+            setSplashState('onboarding');
+        }, 2500);
+
+        return () => clearTimeout(splashTimer);
     }, []);
+
+    if (splashState === 'initial') {
+        return <CustomerSplash />;
+    }
+    
+    if (splashState === 'onboarding') {
+        return <CustomerOnboarding onGetStarted={() => setSplashState('done')} />;
+    }
+
 
     return (
         <LocationProvider>

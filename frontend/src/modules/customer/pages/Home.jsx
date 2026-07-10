@@ -405,7 +405,7 @@ const Home = () => {
   };
 
   return (
-    <div className={`min-h-screen pt-[190px] md:pt-[250px] ${products.length === 0 && !isLoading ? "bg-white" : "bg-[#F5F7F8]"}`}>
+    <div className={`min-h-screen pt-[135px] md:pt-[150px] ${products.length === 0 && !isLoading ? "bg-white" : "bg-[#F5F7F8]"}`}>
       <div className={cn("contents", isProductDetailOpen && "hidden md:contents")}>
         <MainLocationHeader categories={categories} activeCategory={activeCategory} onCategorySelect={setActiveCategory} />
       </div>
@@ -420,22 +420,23 @@ const Home = () => {
       ) : (
         <>
           <motion.div ref={heroRef} className="block md:hidden will-change-transform" style={isMobile ? { opacity: 1 } : { opacity, y, scale, pointerEvents }}>
-            <div className="relative w-full overflow-hidden">
-              {heroConfig.banners?.items?.length ? (
-                <ExperienceBannerCarousel section={{ title: "" }} items={heroConfig.banners.items} fullWidth edgeToEdge />
-              ) : (
-                <div className="w-full h-[190px] bg-[#ecfeff] p-6 relative overflow-hidden flex items-center border-y border-primary/10 shadow-sm">
-                  <div className="relative z-10 w-3/5 flex flex-col items-start gap-2">
-                    <h4 className="text-2xl font-black text-[#1A1A1A] tracking-tight">Get <span className="text-primary">Products</span></h4>
-                    <button className="bg-[#FF1E56] text-white px-6 py-2.5 rounded-2xl font-black text-xs tracking-wide">Order now</button>
-                  </div>
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mt-12 -mr-12" />
+            <div className="relative w-full px-4 mt-6 mb-2">
+              <div className="w-full h-[155px] bg-gradient-to-r from-[#1A4516] to-[#256121] rounded-lg p-5 relative overflow-hidden flex items-center shadow-xl">
+                <div className="relative z-10 w-3/5 flex flex-col items-start gap-1">
+                  <h4 className="text-[19px] sm:text-[21px] leading-[1.1] font-bold text-white">
+                    Fresh Vegetables<br/>Big Savings
+                  </h4>
+                  <button className="bg-white text-[#1A4516] px-5 py-2 rounded-xl font-bold text-[12px] mt-2 shadow-sm active:scale-95 transition-transform">
+                    Shop Now
+                  </button>
                 </div>
-              )}
+                <div className="absolute bottom-[-10px] right-[-20px] w-1/2 h-[120%] flex items-end justify-end pointer-events-none">
+                  <img src="/vegetable-basket-banner.png" alt="Fresh Vegetables" className="object-contain h-full w-auto drop-shadow-2xl" />
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          <PromoMarquee />
           <QuickCategorySlider categories={effectiveQuickCategories} onCategoryClick={(id) => navigate(`/category/${id}`)} />
           <LowestPriceSection products={products} onSeeAll={() => navigate("/category/all")} />
           <OfferSections sections={offerSections} noServiceData={noServiceData} />

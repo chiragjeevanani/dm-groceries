@@ -178,85 +178,13 @@ const MainLocationHeader = ({
     }
   };
 
-  // Search placeholder animation
-  const [searchPlaceholder, setSearchPlaceholder] = useState("Search ");
-  const [typingState, setTypingState] = useState({
-    textIndex: 0,
-    charIndex: 0,
-    isDeleting: false,
-    isPaused: false,
-  });
-
-  const staticText = "Search ";
-  const typingPhrases = [
-    '"bread"',
-    '"milk"',
-    '"chocolate"',
-    '"eggs"',
-    '"chips"',
-  ];
-
-  useEffect(() => {
-    const { textIndex, charIndex, isDeleting, isPaused } = typingState;
-    const currentPhrase = typingPhrases[textIndex];
-
-    if (isPaused) {
-      const timeout = setTimeout(() => {
-        setTypingState((prev) => ({
-          ...prev,
-          isPaused: false,
-          isDeleting: true,
-        }));
-      }, 2000); // Pause after full phrase
-      return () => clearTimeout(timeout);
-    }
-
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          // Typing
-          if (charIndex < currentPhrase.length) {
-            setSearchPlaceholder(
-              staticText + currentPhrase.substring(0, charIndex + 1),
-            );
-            setTypingState((prev) => ({
-              ...prev,
-              charIndex: prev.charIndex + 1,
-            }));
-          } else {
-            // Finished typing
-            setTypingState((prev) => ({ ...prev, isPaused: true }));
-          }
-        } else {
-          // Deleting
-          if (charIndex > 0) {
-            setSearchPlaceholder(
-              staticText + currentPhrase.substring(0, charIndex - 1),
-            );
-            setTypingState((prev) => ({
-              ...prev,
-              charIndex: prev.charIndex - 1,
-            }));
-          } else {
-            // Finished deleting
-            setTypingState((prev) => ({
-              ...prev,
-              isDeleting: false,
-              textIndex: (prev.textIndex + 1) % typingPhrases.length,
-            }));
-          }
-        }
-      },
-      isDeleting ? 50 : 100,
-    ); // 50ms deleting speed, 100ms typing speed
-
-    return () => clearTimeout(timeout);
-  }, [typingState]);
+  // Search placeholder animation (removed for static text in new design)
+  const searchPlaceholder = "Search for vegetables, fruits, grocery...";
 
   // Smooth scroll interpolations
   const headerTopPadding = useTransform(scrollY, [0, 160], [16, 12]);
   const headerBottomPadding = useTransform(scrollY, [0, 160], [4, 3]);
-  const headerRoundness = useTransform(scrollY, [0, 160], [0, 24]);
+  const headerRoundness = useTransform(scrollY, [0, 160], [24, 24]);
   const bgOpacity = useTransform(scrollY, [0, 160], [1, 0.98]);
 
   // Content animations
@@ -280,12 +208,12 @@ const MainLocationHeader = ({
     value > 150 ? "none" : "block",
   );
 
-  const baseHeaderColor = activeCategory?.headerColor || "var(--primary)";
-  const headerFontColor = activeCategory?.headerFontColor || "#111827";
-  const headerIconColor = activeCategory?.headerIconColor || "#111111";
+  const baseHeaderColor = "#1A4516";
+  const headerFontColor = "#FFFFFF";
+  const headerIconColor = "#FFFFFF";
   
-  const headerGradient = buildHeaderGradient(baseHeaderColor);
-  const searchBarBg = buildSearchBarBackgroundColor(baseHeaderColor);
+  const headerGradient = "none";
+  const searchBarBg = "#FFFFFF";
   const categoryAccent = headerIconColor;
 
   useEffect(() => {
@@ -313,7 +241,7 @@ const MainLocationHeader = ({
             borderBottomLeftRadius: headerRoundness,
             borderBottomRightRadius: headerRoundness,
             opacity: bgOpacity,
-            backgroundImage: headerGradient,
+            backgroundColor: baseHeaderColor,
           }}
           className="px-4 shadow-[0_4px_20px_rgba(0,0,0,0.15)] overflow-hidden transform-gpu will-change-transform">
           {/* Subtle Glow Overlay */}
@@ -511,7 +439,7 @@ const MainLocationHeader = ({
           </div>
 
           {/* Search Bar (MOBILE ONLY) */}
-          <div className="relative z-10 mt-[1.5px] flex items-center gap-2 md:hidden">
+          <div className="relative z-10 mt-[1.5px] mb-3 flex items-center gap-2 md:hidden">
             <motion.div
               onClick={handleSearchClick}
               whileTap={{ scale: 0.98 }}
@@ -530,42 +458,7 @@ const MainLocationHeader = ({
             </motion.div>
           </div>
 
-          {/* Categories Navigation - Smooth Collapse */}
-          {categories.length > 0 && (
-            <motion.div
-              layout
-              transition={{
-                layout: {
-                  type: "spring",
-                  stiffness: 420,
-                  damping: 34,
-                  mass: 0.6,
-                },
-              }}
-              style={{
-                height: navHeight,
-                opacity: navOpacity,
-                marginTop: categorySpacing,
-                display: displayNav,
-                overflowY: "hidden",
-              }}
-              className="relative flex items-end md:justify-center gap-0 overflow-x-auto no-scrollbar -mx-2 px-2 md:mx-0 md:px-0 z-10 snap-x pt-1 min-h-[68px] md:min-h-[76px] pb-0.5">
-              {categories.slice(0, 10).map((cat) => {
-                const isActive = activeCategory?.id === cat.id;
-                return (
-                  <CategoryNavColumn
-                    key={cat.id}
-                    cat={cat}
-                    isActive={isActive}
-                    categoryAccent={categoryAccent}
-                    onCategorySelect={onCategorySelect}
-                    headerFontColor={headerFontColor}
-                    headerIconColor={headerIconColor}
-                  />
-                );
-              })}
-            </motion.div>
-          )}
+
 
           {/* Background Decorative patterns */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px] -mr-40 -mt-40 pointer-events-none" />

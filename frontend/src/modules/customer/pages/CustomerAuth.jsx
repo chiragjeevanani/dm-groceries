@@ -26,41 +26,41 @@ const CATEGORIES = [
     {
         title: "Grocery",
         icon: <ShoppingBasket size={28} />,
-        color: "#ecfeff",
-        ring: "var(--primary)",
-        text: "var(--brand-500)",
-        theme: "var(--primary)",
-        shadow: "rgba(97, 218, 251, 0.3)",
+        color: "#F5FBF5",
+        ring: "#1A4516",
+        text: "#1A4516",
+        theme: "#1A4516",
+        shadow: "rgba(26, 69, 22, 0.3)",
         img: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600"
     },
     {
         title: "Store",
         icon: <Smartphone size={28} />,
-        color: "#f0f9ff",
-        ring: "var(--brand-400)",
-        text: "#0369a1",
-        theme: "var(--brand-500)",
-        shadow: "rgba(14, 165, 233, 0.3)",
+        color: "#F5FBF5",
+        ring: "#1A4516",
+        text: "#1A4516",
+        theme: "#1A4516",
+        shadow: "rgba(26, 69, 22, 0.3)",
         img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=600"
     },
     {
         title: "Food",
         icon: <Utensils size={28} />,
-        color: "#f0fdfa",
-        ring: "#22d3ee",
-        text: "#0e7490",
-        theme: "var(--brand-500)",
-        shadow: "rgba(14, 165, 233, 0.3)",
+        color: "#F5FBF5",
+        ring: "#1A4516",
+        text: "#1A4516",
+        theme: "#1A4516",
+        shadow: "rgba(26, 69, 22, 0.3)",
         img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600"
     },
     {
         title: "Health",
         icon: <ShieldCheck size={28} />,
-        color: "#eff6ff",
-        ring: "#60a5fa",
-        text: "#1d4ed8",
-        theme: "#3b82f6",
-        shadow: "rgba(59, 130, 246, 0.3)",
+        color: "#F5FBF5",
+        ring: "#1A4516",
+        text: "#1A4516",
+        theme: "#1A4516",
+        shadow: "rgba(26, 69, 22, 0.3)",
         img: "https://images.unsplash.com/photo-1512678080530-7760d81faba6?q=80&w=1200&auto=format&fit=crop"
     },
 ];
@@ -148,14 +148,11 @@ const CustomerAuth = () => {
         <div className="min-h-screen w-full relative flex items-center justify-center font-['Outfit',_sans-serif] overflow-hidden">
 
             {/* Dynamic Atmospheric Background */}
-            <div 
-                className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
-                style={{ backgroundImage: `url(${BgImage})` }}
-            >
+            <div className="absolute inset-0 z-0 bg-slate-50 transition-all duration-1000">
                 <motion.div
                     animate={{ backgroundColor: activeCategory.color }}
                     transition={{ duration: 1.5 }}
-                    className="absolute inset-0 opacity-80 backdrop-blur-sm"
+                    className="absolute inset-0 opacity-10 backdrop-blur-sm"
                 />
             </div>
 
@@ -194,59 +191,17 @@ const CustomerAuth = () => {
             </div>
 
             {/* Premium Centered Card Container */}
-            <div className="w-[92%] max-w-[400px] h-[85vh] max-h-[780px] bg-white relative z-10 overflow-hidden rounded-[40px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-white/40 flex flex-col transition-colors duration-1000">
+            <div className="w-[92%] max-w-[400px] h-fit max-h-[90vh] bg-white relative z-10 overflow-hidden rounded-[40px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-white/40 flex flex-col transition-colors duration-1000 pb-6">
 
-                {/* Scrollable Content Container */}
-                <div className="h-full overflow-y-auto no-scrollbar pb-20">
+                {/* Content Container */}
+                <div className="h-full overflow-hidden">
 
                     {/* Header: Immersive Category Visuals */}
                     <motion.div
                         animate={{ backgroundColor: activeCategory.theme }}
                         transition={{ duration: 1 }}
-                        className="relative h-[35%] w-full overflow-hidden"
+                        className="relative h-[160px] w-full overflow-hidden flex items-center justify-center"
                     >
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={carouselIndex}
-                                initial={{ opacity: 0, scale: 1.1 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1.05 }}
-                                transition={{ duration: 0.8 }}
-                                className="absolute inset-0"
-                            >
-                                <img
-                                    src={activeCategory.img}
-                                    className="w-full h-full object-cover"
-                                    loading="lazy"
-                                    alt="banner"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-transparent opacity-60" style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.1), ${activeCategory.theme})` }} />
-                            </motion.div>
-                        </AnimatePresence>
-
-                        {/* Top Branding Bar */}
-                        <div className="absolute top-8 left-0 w-full px-6 flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <div className="w-10 h-10 bg-white/20 backdrop-blur-xl rounded-xl flex items-center justify-center border border-white/30">
-                                    <ShoppingBag size={20} className="text-white" />
-                                </div>
-                                <span className="text-white font-black tracking-tighter text-xl">{appName.toUpperCase()}</span>
-                            </div>
-                        </div>
-
-                        {/* Centered App Message */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 text-white pt-10">
-                            <motion.h2
-                                key={carouselIndex}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="text-2xl font-black tracking-tight leading-none mb-2"
-                            >
-                                {activeCategory.title.toUpperCase()} INSIDE
-                            </motion.h2>
-                            <p className="text-[10px] font-bold uppercase tracking-[4px] opacity-70">Everything delivered fast</p>
-                        </div>
-
                         {/* S-Curve Divider */}
                         <div className="absolute -bottom-1 left-0 w-full leading-[0]">
                             <svg viewBox="0 0 1440 320" preserveAspectRatio="none" className="w-full h-24">
@@ -289,7 +244,7 @@ const CustomerAuth = () => {
 
 
                     {/* Authentication Form Block */}
-                    <div className="px-6 pt-6 pb-10">
+                    <div className="px-6 pt-6 pb-2">
                         <AnimatePresence mode="wait">
                             {!showOtp ? (
                                 <motion.div
@@ -297,7 +252,7 @@ const CustomerAuth = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, x: -20 }}
-                                    className="space-y-5"
+                                    className="space-y-4"
                                 >
                                     {/* App Style Tab Switcher */}
                                     <div className="flex bg-gray-50 rounded-2xl p-1.5 border border-gray-100">
@@ -336,7 +291,7 @@ const CustomerAuth = () => {
                                                     required
                                                     name="name"
                                                     placeholder="Full Name"
-                                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl pl-12 pr-4 py-4 text-sm font-bold text-gray-800 outline-none focus:bg-white transition-all"
+                                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl pl-12 pr-4 py-3 text-sm font-bold text-gray-800 outline-none focus:bg-white transition-all"
                                                     style={{ '--theme-color': activeCategory.theme }}
                                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                     onFocus={(e) => e.target.style.borderColor = activeCategory.theme}
@@ -356,7 +311,7 @@ const CustomerAuth = () => {
                                                 name="phone"
                                                 maxLength={10}
                                                 placeholder="Mobile Number"
-                                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl pl-20 pr-4 py-4 text-sm font-bold text-gray-800 outline-none focus:bg-white transition-all"
+                                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl pl-20 pr-4 py-3 text-sm font-bold text-gray-800 outline-none focus:bg-white transition-all"
                                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
                                                 onFocus={(e) => e.target.style.borderColor = activeCategory.theme}
                                                 onBlur={(e) => e.target.style.borderColor = '#F3F4F6'}
@@ -366,7 +321,7 @@ const CustomerAuth = () => {
                                         <button
                                             type="submit"
                                             disabled={isLoading}
-                                            className="w-full text-white py-5 rounded-[24px] text-xs font-black tracking-[4px] flex items-center justify-center gap-3 active:scale-95 transition-all uppercase"
+                                            className="w-full text-white py-4 mb-2 rounded-[24px] text-xs font-black tracking-[4px] flex items-center justify-center gap-3 active:scale-95 transition-all uppercase"
                                             style={{ backgroundColor: activeCategory.theme, boxShadow: `0 20px 40px ${activeCategory.shadow}` }}
                                         >
                                             {isLoading ? 'Verifying...' : 'Continue'}

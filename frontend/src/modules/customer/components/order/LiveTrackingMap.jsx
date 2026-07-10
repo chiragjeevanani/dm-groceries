@@ -242,17 +242,17 @@ const LiveTrackingMap = memo(({
 
   if (norm === "seller_pending") {
     return (
-      <div className="relative w-full min-h-[260px] bg-gradient-to-br from-[#f0faf4] to-[#e8f5e9] overflow-hidden rounded-b-[2rem] flex flex-col items-center justify-center gap-3 px-6 py-10 border-b border-brand-100">
+      <div className="relative w-full min-h-[200px] bg-gradient-to-br from-[#F5FBF5] to-[#eaf3ea] overflow-hidden rounded-b-[2rem] flex flex-col items-center justify-center gap-2 px-4 py-6 border-b border-[#1A4516]/10">
         <motion.div
           animate={{ scale: [1, 1.05, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="h-16 w-16 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-brand-200">
-          <Clock size={30} className="text-white" />
+          className="h-14 w-14 bg-[#1A4516] rounded-full flex items-center justify-center shadow-lg shadow-[#1A4516]/20">
+          <Clock size={26} className="text-white" />
         </motion.div>
-        <h3 className="text-lg font-black text-gray-800 text-center">
+        <h3 className="text-base font-black text-[#1A4516] text-center">
           Waiting for seller to accept
         </h3>
-        <p className="text-sm text-gray-500 text-center max-w-sm font-medium">
+        <p className="text-xs text-[#1A4516]/80 text-center max-w-sm font-medium leading-snug">
           The store has up to 60 seconds to confirm. If they don&apos;t, your
           order will be cancelled automatically.
         </p>

@@ -1,135 +1,96 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
-import Lottie from "lottie-react";
 import ProductCard from "../shared/ProductCard";
-import {
-  getBackgroundColorByValue,
-  getBackgroundGradientByValue,
-} from "@/shared/constants/offerSectionOptions";
-import { applyCloudinaryTransform } from "@/core/utils/imageUtils";
 
-const OfferSections = ({ sections, noServiceData }) => {
+const OfferSections = ({ sections }) => {
   if (!sections || sections.length === 0) return null;
 
+  // Gather all products from all sections to display below the banners
+  const allProductsMap = new Map();
+  sections.forEach(section => {
+    (section.productIds || []).forEach(p => {
+      if (typeof p === "object" && p !== null) {
+        if (!allProductsMap.has(p._id)) {
+          allProductsMap.set(p._id, {
+            id: p._id,
+            name: p.name,
+            image: p.mainImage || p.image || "",
+            price: p.salePrice ?? p.price,
+            originalPrice: p.price ?? p.salePrice,
+            weight: p.weight,
+            deliveryTime: p.deliveryTime,
+          });
+        }
+      }
+    });
+  });
+  const allProducts = Array.from(allProductsMap.values());
+
   return (
-    <div className="w-full px-0 pt-0 pb-2 md:pb-4">
-      {[...sections]
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-        .map((section) => {
-          const bgColor = getBackgroundColorByValue(section.backgroundColor);
-          const sectionProducts = (section.productIds || [])
-            .filter((p) => typeof p === "object" && p !== null)
-            .map((p) => ({
-              id: p._id,
-              _id: p._id,
-              name: p.name,
-              image: p.mainImage || p.image || "",
-              price: p.salePrice ?? p.price,
-              originalPrice: p.price ?? p.salePrice,
-              weight: p.weight,
-              deliveryTime: p.deliveryTime,
-            }));
+    <div className="w-full px-4 mt-6 mb-8 relative z-20">
+      <div className="flex justify-between items-end mb-4 px-1">
+        <h2 className="text-[18px] sm:text-[20px] font-semibold tracking-tight text-[#132018] leading-none">
+          Best Offers For You
+        </h2>
+        <span className="text-[#1A4516] font-bold text-[13px] cursor-pointer active:scale-95 transition-transform pb-[2px]">
+          View All
+        </span>
+      </div>
 
+      {/* Offer Cards Row */}
+      <div className="flex overflow-x-auto gap-3 sm:gap-4 no-scrollbar pb-4 snap-x">
+        {[0, 1].map((idx) => {
+          const section = sections[idx % sections.length]; // Safe fallback if only 1 section exists in DB
           return (
-            <motion.div
-              key={section._id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.4 }}
-              className="mb-4 rounded-none overflow-hidden shadow-[0_18px_35px_rgba(15,23,42,0.16)] bg-white border-y border-slate-100/70 border-x-0 md:border-x">
-              <div
-                className="relative flex items-center justify-between px-5 md:px-8 py-5 md:py-6 text-black"
-                style={{
-                  backgroundColor: bgColor,
-                  backgroundImage: getBackgroundGradientByValue(section.backgroundColor),
-                }}>
-                <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                  <div className="absolute -top-10 -left-10 w-40 h-40 md:w-56 md:h-56 bg-white/20 rounded-full blur-3xl" />
-                  <div className="absolute -bottom-10 right-0 w-44 h-44 bg-white/10 rounded-full blur-3xl" />
-                </div>
-                <div className="flex-1 pr-4">
-                  <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-black/60 mb-1">
-                    Trending right now
-                  </p>
-                  <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight drop-shadow-sm">
-                    {section.title}
-                  </h3>
-                  {((section.categoryIds || [])
-                    .map((c) => (typeof c === "object" && c?.name ? c.name : null))
-                    .filter(Boolean)
-                    .join(", ") || section.categoryId?.name) && (
-                    <p className="text-[11px] md:text-xs font-semibold text-black/75 mt-1">
-                      {(section.categoryIds || [])
-                        .map((c) => (typeof c === "object" && c?.name ? c.name : null))
-                        .filter(Boolean)
-                        .join(", ") || section.categoryId?.name}
-                    </p>
-                  )}
-                </div>
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl flex-shrink-0 shadow-[0_16px_30px_rgba(0,0,0,0.25)] border border-black/10 overflow-hidden relative bg-black/10 transition-transform hover:-translate-y-1 hover:rotate-[-4deg] hover:scale-105">
-                  {sectionProducts[0]?.image ? (
-                    <>
-                      <img
-                        src={applyCloudinaryTransform(sectionProducts[0].image, "f_auto,q_auto,w_150")}
-                        alt={section.title}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/20 to-transparent" />
-                      <div className="absolute -bottom-6 -right-6 w-16 h-16 rounded-full bg-amber-400/60 blur-xl mix-blend-screen" />
-                    </>
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-400 via-amber-500 to-orange-500" />
-                  )}
+          <motion.div 
+            key={`${section._id}-${idx}`}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: idx * 0.1 }}
+            className="w-[130px] sm:w-[150px] h-[140px] sm:h-[160px] flex-shrink-0 snap-start rounded-[20px] bg-gradient-to-br from-[#1A4516] to-[#2b6826] p-3.5 relative overflow-hidden shadow-md shadow-black/10 flex flex-col justify-between"
+          >
+            {/* Background image covering the card */}
+            <div className="absolute inset-0 z-0">
+               <img src={idx % 2 === 0 ? "/offer-vegetables.png" : "/offer-fruits.png"} alt="offer background" className="w-full h-full object-cover opacity-90" />
+               {/* Dark overlay to ensure text is readable */}
+               <div className="absolute inset-0 bg-black/20" />
+            </div>
 
-                  {sectionProducts.length > 0 && (
-                    <div className="absolute top-1 left-1 px-2 py-0.5 rounded-full bg-black/70 text-[9px] font-semibold text-white/90 tracking-wide flex items-center gap-1">
-                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-400" />
-                      {sectionProducts.length} items
-                    </div>
-                  )}
-
-                  <div className="relative z-10 flex items-center justify-center h-full">
-                    <Sparkles
-                      className="text-amber-200 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)]"
-                      size={30}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="px-4 pt-4 md:px-5 md:pt-5 pb-1">
-                <div className="flex overflow-x-auto gap-3 md:gap-4 pb-0 no-scrollbar snap-x snap-mandatory">
-                  {sectionProducts.length === 0 ? (
-                    <div className="w-full py-10 flex flex-col items-center justify-center text-center">
-                      <div className="w-32 h-32 mb-3">
-                        {noServiceData ? (
-                          <Lottie animationData={noServiceData} loop={true} />
-                        ) : (
-                          <div className="w-32 h-32" />
-                        )}
-                      </div>
-                      <p className="text-sm md:text-base text-slate-400 font-bold">
-                        Looking for the best items in this category...
-                      </p>
-                    </div>
-                  ) : (
-                    sectionProducts.map((product) => (
-                      <div key={product.id} className="w-[126px] sm:w-[136px] md:w-[148px] flex-shrink-0 snap-start">
-                        <ProductCard
-                          product={product}
-                          className="bg-white border border-slate-100 shadow-[0_10px_24px_rgba(15,23,42,0.08)]"
-                          compact
-                        />
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </motion.div>
+            <div className="relative z-10">
+              <p className="text-white/90 font-semibold text-[9px] uppercase tracking-wider mb-0.5 drop-shadow-md">Up To</p>
+              <h3 className="text-white font-black text-[22px] leading-none mb-1 shadow-sm drop-shadow-md">
+                {idx % 2 === 0 ? "50% OFF" : "30% OFF"}
+              </h3>
+              <p className="text-white/90 font-medium text-[10px] leading-tight drop-shadow-md">
+                {idx % 2 === 0 ? "On Vegetables" : "On Fruits"}
+              </p>
+            </div>
+            
+            <div className="relative z-10 mt-auto">
+              <span className="text-white font-bold text-[10px] border-b border-white/60 pb-0.5 drop-shadow-sm inline-block">
+                GET IT NOW
+              </span>
+            </div>
+          </motion.div>
           );
         })}
+      </div>
+
+      {/* Merged Products Row (Preserves functionality) */}
+      {allProducts.length > 0 && (
+        <div className="flex overflow-x-auto gap-3 sm:gap-4 no-scrollbar pb-2 pt-2 snap-x">
+          {allProducts.map((product) => (
+            <div key={product.id} className="w-[126px] sm:w-[136px] flex-shrink-0 snap-start">
+              <ProductCard
+                product={product}
+                className="bg-white border border-slate-100 shadow-[0_4px_12px_rgba(0,0,0,0.04)] rounded-[16px]"
+                compact
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

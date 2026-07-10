@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, AnimatePresence, useAnimation, useDragControls } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { X, ChevronDown, Share2, Heart, Search, Clock, Minus, Plus, ShoppingBag, Star, MessageSquare, ArrowLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronDown, Share2, Heart, Search, Clock, Minus, Plus, ShoppingBag, Star, MessageSquare, ArrowLeft, ChevronRight, Leaf, Info } from 'lucide-react';
 import { useProductDetail } from '../../context/ProductDetailContext';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -239,7 +239,7 @@ const ProductDetailSheet = () => {
                     <div className="flex items-center gap-3">
                         <div className={cn(
                             "w-8 h-8 rounded-lg flex items-center justify-center transition-all",
-                            isOpen ? "bg-brand-50 text-primary" : "bg-slate-50 text-slate-400 group-hover:bg-slate-100"
+                            isOpen ? "bg-[#F5FBF5] text-[#1A4516]" : "bg-slate-50 text-slate-400 group-hover:bg-slate-100"
                         )}>
                             {icon}
                         </div>
@@ -250,7 +250,7 @@ const ProductDetailSheet = () => {
                     </div>
                     <motion.div
                         animate={{ rotate: isOpen ? 180 : 0 }}
-                        className={cn("transition-colors", isOpen ? "text-primary" : "text-slate-300")}
+                        className={cn("transition-colors", isOpen ? "text-[#1A4516]" : "text-slate-300")}
                     >
                         <ChevronDown size={18} strokeWidth={3} />
                     </motion.div>
@@ -493,10 +493,10 @@ const ProductDetailSheet = () => {
                                                         whileHover={{ scale: 1.02, y: -2 }}
                                                         whileTap={{ scale: 0.98 }}
                                                         onClick={handleAddToCart}
-                                                        className="bg-gradient-to-r from-primary to-[var(--brand-400)] text-white h-12 px-8 rounded-xl font-black text-[13px] flex items-center gap-2 shadow-lg shadow-brand-100 hover:shadow-brand-200 transition-all uppercase tracking-widest border border-white/20"
+                                                        className="bg-[#1A4516] hover:bg-[#133010] text-white h-[46px] px-8 rounded-xl font-bold text-[13px] flex items-center justify-center gap-2 shadow-lg shadow-[#1A4516]/20 transition-all uppercase tracking-widest flex-1"
                                                     >
-                                                        <ShoppingBag size={16} strokeWidth={3} />
-                                                        Add to Cart
+                                                        <ShoppingBag size={16} strokeWidth={2.5} />
+                                                        ADD TO CART
                                                     </motion.button>
                                                     )}
                                                 </div>
@@ -613,7 +613,7 @@ const ProductDetailSheet = () => {
                                             <AccordionItem 
                                                 id="details" 
                                                 title="Product Details" 
-                                                icon={<Search size={16} />}
+                                                icon={<Info size={16} />}
                                             >
                                                 <div className="grid grid-cols-2 gap-3 mt-1">
                                                     {[
@@ -638,7 +638,7 @@ const ProductDetailSheet = () => {
                                             >
                                                 <div className="space-y-6 mt-2">
                                                     <div className="flex items-center justify-between mb-4">
-                                                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-50 text-primary rounded-xl text-xs font-black border border-brand-100">
+                                                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F5FBF5] text-[#1A4516] rounded-xl text-xs font-black border border-[#1A4516]/20">
                                                             <Star size={14} fill="currentColor" />
                                                             {reviews.length > 0 ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1) : '4.8'}
                                                         </div>
@@ -647,7 +647,7 @@ const ProductDetailSheet = () => {
                                                     {/* Review Form */}
                                                     <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-6">
                                                         <h4 className="font-black text-slate-800 text-xs mb-3 flex items-center gap-2">
-                                                            <MessageSquare size={13} className="text-primary" />
+                                                            <MessageSquare size={13} className="text-[#1A4516]" />
                                                             Rate this product
                                                         </h4>
                                                         <form onSubmit={handleReviewSubmit} className="space-y-3">
@@ -661,15 +661,15 @@ const ProductDetailSheet = () => {
                                                                         onClick={() => setNewReview({ ...newReview, rating: s })}
                                                                         className={cn(
                                                                             'h-9 w-9 rounded-xl flex items-center justify-center transition-all shadow-sm',
-                                                                            newReview.rating >= s ? 'bg-brand-50 text-primary border border-brand-100' : 'bg-white text-slate-300 border border-slate-100'
+                                                                            newReview.rating >= s ? 'bg-[#F5FBF5] text-[#1A4516] border border-[#1A4516]/20' : 'bg-white text-slate-300 border border-slate-100'
                                                                         )}
                                                                     >
                                                                         <Star size={15} className={cn(newReview.rating >= s && 'fill-current')} />
                                                                     </motion.button>
                                                                 ))}
                                                             </div>
-                                                            <textarea value={newReview.comment} onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })} placeholder="Share your experience..." className="w-full bg-white border border-slate-100 rounded-xl p-3 text-xs font-medium min-h-[80px] outline-none focus:border-primary transition-all resize-none shadow-sm" />
-                                                            <Button type="submit" disabled={isSubmittingReview} className="w-full h-10 bg-primary hover:opacity-90 text-white font-black rounded-xl text-[11px] uppercase tracking-[0.1em] transition-all shadow-lg shadow-brand-100">
+                                                            <textarea value={newReview.comment} onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })} placeholder="Share your experience..." className="w-full bg-white border border-slate-100 rounded-xl p-3 text-xs font-medium min-h-[80px] outline-none focus:border-[#1A4516] transition-all resize-none shadow-sm" />
+                                                            <Button type="submit" disabled={isSubmittingReview} className="w-full h-10 bg-[#1A4516] hover:bg-[#133010] text-white font-black rounded-xl text-[11px] uppercase tracking-[0.1em] transition-all shadow-lg shadow-[#1A4516]/20">
                                                                 {isSubmittingReview ? 'Submitting...' : 'Post Review'}
                                                                 </Button>
                                                         </form>
@@ -678,16 +678,16 @@ const ProductDetailSheet = () => {
                                                     {/* Reviews List */}
                                                     <div className="space-y-3">
                                                         {reviewLoading ? (
-                                                            <div className="flex justify-center py-6"><Loader2 className="animate-spin text-primary" size={20} /></div>
+                                                            <div className="flex justify-center py-6"><Loader2 className="animate-spin text-[#1A4516]" size={20} /></div>
                                                         ) : reviews.length > 0 ? (
                                                             reviews.map((r, rIdx) => (
                                                                 <div key={r._id} className="p-4 rounded-xl border border-slate-100 bg-white hover:shadow-md hover:translate-x-1 transition-all group">
                                                                     <div className="flex justify-between items-start mb-2">
                                                                         <div className="flex items-center gap-2">
-                                                                            <div className="h-8 w-8 rounded-full bg-brand-50 flex items-center justify-center text-[11px] font-black text-primary border border-brand-100">{r.userId?.name?.[0] || 'A'}</div>
+                                                                            <div className="h-8 w-8 rounded-full bg-[#F5FBF5] flex items-center justify-center text-[11px] font-black text-[#1A4516] border border-[#1A4516]/20">{r.userId?.name?.[0] || 'A'}</div>
                                                                             <div>
                                                                                 <p className="text-[12px] font-black text-slate-800">{r.userId?.name || 'Anonymous'}</p>
-                                                                                <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} size={9} className={cn(i < r.rating ? 'text-primary fill-primary' : 'text-slate-200')} />)}</div>
+                                                                                <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} size={9} className={cn(i < r.rating ? 'text-[#1A4516] fill-[#1A4516]' : 'text-slate-200')} />)}</div>
                                                                             </div>
                                                                         </div>
                                                                         <span className="text-[10px] font-bold text-slate-400">{new Date(r.createdAt).toLocaleDateString()}</span>
@@ -767,12 +767,21 @@ const ProductDetailSheet = () => {
                             <motion.button
                                 onClick={closeProduct}
                                 whileTap={{ scale: 0.9 }}
-                                className="w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center border border-gray-100 pointer-events-auto"
+                                className="w-10 h-10 bg-white/80 backdrop-blur-md shadow-sm rounded-full flex items-center justify-center border border-white/50 pointer-events-auto transition-colors hover:bg-white"
                             >
-                                <ArrowLeft size={24} className="text-primary" strokeWidth={3} />
+                                <ArrowLeft size={22} className="text-[#1A4516]" strokeWidth={2.5} />
                             </motion.button>
-                            <div className="flex gap-3 pointer-events-auto invisible">
-                                {/* Hidden as per request to simplify the view */}
+                            <div className="flex gap-3 pointer-events-auto">
+                                <motion.button
+                                    onClick={toggleWishlist}
+                                    whileTap={{ scale: 0.9 }}
+                                    className="w-10 h-10 bg-white/80 backdrop-blur-md shadow-sm rounded-full flex items-center justify-center border border-white/50 pointer-events-auto transition-colors hover:bg-white"
+                                >
+                                    <Heart size={20} className={cn(
+                                        "transition-colors", 
+                                        isWishlisted ? "fill-red-500 text-red-500" : "text-gray-500 hover:text-red-400"
+                                    )} strokeWidth={2.5} />
+                                </motion.button>
                             </div>
                         </div>
 
@@ -786,7 +795,7 @@ const ProductDetailSheet = () => {
                             onWheel={handleWheel}
                         >
                             {/* Product Image Carousel */}
-                            <div className="relative w-full bg-gradient-to-b from-[#F5F7F8] to-white pt-0 pb-4 h-[52vh] min-h-[320px] max-h-[560px]">
+                            <div className="relative w-full bg-white pt-16 pb-4 h-[50vh] min-h-[300px] max-h-[500px]">
                                 <div
                                     ref={scrollRef}
                                     className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar h-full w-full"
@@ -796,15 +805,15 @@ const ProductDetailSheet = () => {
                                     }}
                                 >
                                     {allImages.map((img, i) => (
-                                        <div key={i} className="flex-shrink-0 w-full h-full snap-center flex items-center justify-center px-0 sm:px-4">
+                                        <div key={i} className="flex-shrink-0 w-full h-full snap-center flex items-center justify-center px-4 mt-4">
                                             <motion.img
                                                 initial={{ scale: 0.8, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
                                                 transition={{ duration: 0.4 }}
                                                 src={applyCloudinaryTransform(img, "f_auto,q_auto:best,w_1200,dpr_auto")}
                                                 alt={`${selectedProduct.name} ${i + 1}`}
-                                                className="w-full h-full object-contain mix-blend-multiply drop-shadow-xl"
-                                                style={{ objectPosition: 'center calc(50% - 40px)' }}
+                                                className="w-full h-full object-contain mix-blend-multiply"
+                                                style={{ objectPosition: 'center' }}
                                             />
                                         </div>
                                     ))}
@@ -827,234 +836,199 @@ const ProductDetailSheet = () => {
                             </div>
 
                             {/* Product Info Container */}
-                            <div className="px-5 pt-2 pb-6">
-                                {/* Delivery Time Badge */}
-                                <div className="inline-flex items-center gap-1.5 bg-[#F0FDF4] border border-brand-100 text-primary px-2.5 py-1 rounded-lg text-[10px] font-black uppercase mb-3">
-                                    <Clock size={12} strokeWidth={3} />
-                                    {selectedProduct.deliveryTime || "8 Mins"}
-                                </div>
-
-                                <h2 className="text-xl font-black text-[#1A1A1A] leading-tight mb-2">
+                            <div className="px-5 pt-2 pb-10">
+                                <h2 className="text-[24px] font-bold text-[#111827] leading-tight mb-1">
                                     {selectedProduct.name}
                                 </h2>
+                                <p className="text-[#6B7280] text-[14px] font-medium mb-4">
+                                    {selectedProduct.weight || "1 kg"}
+                                </p>
+
+                                <div className="flex items-center gap-3 mb-5">
+                                    <span className="text-[26px] font-bold text-[#111827]">
+                                        ₹{selectedProduct.salePrice || selectedProduct.price}
+                                    </span>
+                                    {((selectedProduct.salePrice && selectedProduct.salePrice < selectedProduct.price) || (selectedProduct.originalPrice > selectedProduct.price)) && (
+                                        <>
+                                            <span className="text-[15px] text-[#9CA3AF] line-through font-medium decoration-[#9CA3AF]">
+                                                ₹{selectedProduct.price || selectedProduct.originalPrice}
+                                            </span>
+                                            <span className="text-[#1A4516] text-[13px] font-bold tracking-wide ml-1">
+                                                {Math.round((((selectedProduct.price || selectedProduct.originalPrice) - (selectedProduct.salePrice || selectedProduct.price)) / (selectedProduct.price || selectedProduct.originalPrice)) * 100)}% OFF
+                                            </span>
+                                        </>
+                                    )}
+                                </div>
+
+                                <div className="flex items-center gap-1.5 mb-6 border-b border-gray-100 pb-6">
+                                    <span className="text-[#111827] text-[13px] font-bold">Quality :</span>
+                                    <span className="text-[#1A4516] text-[13px] font-bold flex items-center gap-1">
+                                        Premium <Leaf size={14} fill="currentColor" strokeWidth={1} />
+                                    </span>
+                                </div>
 
                                 {/* Variants Selection (Mobile) */}
                                 {selectedProduct.variants && selectedProduct.variants.length > 0 && (
-                                    <div className="mt-4 mb-2">
-                                        <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Select Variant</h4>
+                                    <div className="mb-6 border-b border-gray-100 pb-6">
+                                        <h4 className="text-[13px] font-bold text-[#111827] mb-3">Variants</h4>
                                         <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
                                             {selectedProduct.variants.map((v, idx) => (
-                                                <motion.button
+                                                <button
                                                     key={idx}
-                                                    whileTap={{ scale: 0.95 }}
                                                     onClick={() => setSelectedVariant(v)}
                                                     className={cn(
-                                                        "flex-shrink-0 px-5 py-2.5 font-bold rounded-xl text-sm transition-all relative border-2",
+                                                        "flex-shrink-0 px-4 py-2 font-bold rounded-lg text-sm transition-all relative border",
                                                         selectedVariant?.sku === v.sku
-                                                            ? "bg-[#ecfeff] border-primary text-primary shadow-sm shadow-brand-100"
-                                                            : "bg-slate-50 border-slate-100 text-slate-500"
+                                                            ? "bg-[#F5FBF5] border-[#1A4516] text-[#1A4516]"
+                                                            : "bg-white border-gray-200 text-gray-500"
                                                     )}
                                                 >
                                                     {v.name}
-                                                    {selectedVariant?.sku === v.sku && (
-                                                        <div className="absolute top-0 right-0 w-3 h-3 bg-primary rounded-bl-lg" />
-                                                    )}
-                                                </motion.button>
+                                                </button>
                                             ))}
                                         </div>
                                     </div>
                                 )}
 
-                                {/* Product Information Accordion (Mobile) */}
-                                <div className="mt-4 border-t border-slate-100">
-                                    {/* Description */}
-                                    {cleanDesc && (
-                                        <AccordionItem 
-                                            id="description" 
-                                            title="Product Description" 
-                                            icon={<Clock size={18} strokeWidth={2.5} />}
-                                        >
-                                            <div
-                                                className="text-sm text-slate-500 font-medium leading-relaxed whitespace-pre-line"
-                                                dangerouslySetInnerHTML={{ __html: cleanDesc }}
-                                            />
-                                        </AccordionItem>
-                                    )}
+                                <div className="mb-6">
+                                    <h3 className="text-[14px] font-bold text-[#111827] mb-2">Product Description</h3>
+                                    <p className="text-[#6B7280] text-[13px] leading-relaxed">
+                                        {cleanDesc || "Fresh and organic produce directly from trusted farms."}
+                                    </p>
+                                </div>
 
-                                    {/* Product Details */}
+                                <div className="mt-4 border-t border-slate-100">
+                                    {/* Product Details Accordion */}
                                     <AccordionItem 
-                                        id="details" 
-                                        title="Product Details" 
-                                        icon={<Search size={18} strokeWidth={2.5} />}
+                                        id="details_mobile" 
+                                        title="More Information" 
+                                        icon={<Info size={16} />}
                                     >
                                         <div className="grid grid-cols-2 gap-3 mt-1">
                                             {[
-                                                { label: 'Shelf Life', value: '3 Days' },
-                                                { label: 'Country of Origin', value: 'India' },
-                                                { label: 'FSSAI License', value: '1001234567890' },
-                                                { label: 'Customer Care', value: supportEmail }
+                                                { label: 'Shelf Life', value: '3 Days', emoji: '📅' },
+                                                { label: 'Country of Origin', value: 'India', emoji: '🇮🇳' },
+                                                { label: 'FSSAI License', value: '1001234567890', emoji: '🛡️' },
+                                                { label: 'Customer Care', value: supportEmail, emoji: '📧' }
                                             ].map((d) => (
-                                                <div key={d.label} className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                                    <span className="text-gray-400 block mb-0.5 text-[10px] font-bold uppercase tracking-wider">{d.label}</span>
-                                                    <span className="font-black text-slate-800 text-xs">{d.value}</span>
+                                                <div key={d.label} className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 group hover:bg-white hover:shadow-sm transition-all">
+                                                    <span className="text-[10px] text-slate-400 block mb-0.5 font-bold uppercase tracking-wider">{d.label}</span>
+                                                    <span className="font-black text-slate-800 text-[12px]">{d.value}</span>
                                                 </div>
                                             ))}
                                         </div>
                                     </AccordionItem>
 
-                                    {/* Customer Reviews */}
+                                    {/* Customer Reviews Accordion */}
                                     <AccordionItem 
-                                        id="reviews" 
+                                        id="reviews_mobile" 
                                         title={`Customer Reviews (${reviews.length > 0 ? reviews.length : '120+'})`}
-                                        icon={<Star size={18} strokeWidth={2.5} />}
+                                        icon={<Star size={16} />}
                                     >
                                         <div className="space-y-6 mt-2">
                                             <div className="flex items-center justify-between mb-4">
-                                                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-50 text-primary rounded-xl text-xs font-black border border-brand-100">
-                                                    <Star size={16} fill="currentColor" />
+                                                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F5FBF5] text-[#1A4516] rounded-xl text-xs font-black border border-[#1A4516]/20">
+                                                    <Star size={14} fill="currentColor" />
                                                     {reviews.length > 0 ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1) : '4.8'}
                                                 </div>
                                             </div>
 
                                             {/* Review Form */}
-                                            <div className="bg-slate-50 p-5 rounded-3xl border border-slate-100 mb-6">
-                                                <h4 className="font-black text-slate-800 text-sm mb-1">Rate this product</h4>
-                                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-4">Reviews are moderated</p>
-                                                <form onSubmit={handleReviewSubmit} className="space-y-4">
-                                                    <div className="flex gap-2">
+                                            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 mb-6">
+                                                <h4 className="font-black text-slate-800 text-xs mb-3 flex items-center gap-2">
+                                                    <MessageSquare size={13} className="text-[#1A4516]" />
+                                                    Rate this product
+                                                </h4>
+                                                <form onSubmit={handleReviewSubmit} className="space-y-3">
+                                                    <div className="flex gap-1.5">
                                                         {[1, 2, 3, 4, 5].map((s) => (
-                                                            <button
+                                                            <motion.button
                                                                 key={s}
                                                                 type="button"
+                                                                whileHover={{ scale: 1.1 }}
+                                                                whileTap={{ scale: 0.9 }}
                                                                 onClick={() => setNewReview({ ...newReview, rating: s })}
                                                                 className={cn(
-                                                                    "h-10 w-10 rounded-xl flex items-center justify-center transition-all shadow-sm",
-                                                                    newReview.rating >= s ? "bg-brand-50 text-primary border border-brand-100" : "bg-white text-slate-300 border border-slate-100"
+                                                                    'h-9 w-9 rounded-xl flex items-center justify-center transition-all shadow-sm',
+                                                                    newReview.rating >= s ? 'bg-[#F5FBF5] text-[#1A4516] border border-[#1A4516]/20' : 'bg-white text-slate-300 border border-slate-100'
                                                                 )}
                                                             >
-                                                                <Star size={18} className={cn(newReview.rating >= s && "fill-current")} />
-                                                            </button>
+                                                                <Star size={15} className={cn(newReview.rating >= s && 'fill-current')} />
+                                                            </motion.button>
                                                         ))}
                                                     </div>
-                                                    <textarea value={newReview.comment} onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })} placeholder="Write your experience..." className="w-full bg-white border border-slate-100 rounded-2xl p-4 text-sm font-medium min-h-[100px] outline-none focus:border-primary transition-all resize-none shadow-sm" />
-                                                    <Button type="submit" disabled={isSubmittingReview} className="w-full h-12 bg-primary hover:opacity-90 text-white font-black rounded-xl text-xs uppercase tracking-widest transition-all shadow-lg shadow-brand-100">
-                                                        {isSubmittingReview ? "Submitting..." : "Post Review"}
+                                                    <textarea value={newReview.comment} onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })} placeholder="Share your experience..." className="w-full bg-white border border-slate-100 rounded-xl p-3 text-xs font-medium min-h-[80px] outline-none focus:border-[#1A4516] transition-all resize-none shadow-sm" />
+                                                    <Button type="submit" disabled={isSubmittingReview} className="w-full h-10 bg-[#1A4516] hover:bg-[#133010] text-white font-black rounded-xl text-[11px] uppercase tracking-[0.1em] transition-all shadow-lg shadow-[#1A4516]/20">
+                                                        {isSubmittingReview ? 'Submitting...' : 'Post Review'}
                                                     </Button>
                                                 </form>
                                             </div>
 
                                             {/* Reviews List */}
-                                            <div className="space-y-4">
+                                            <div className="space-y-3">
                                                 {reviewLoading ? (
-                                                    <div className="flex justify-center py-8"><Loader2 className="animate-spin text-primary" size={24} /></div>
+                                                    <div className="flex justify-center py-6"><Loader2 className="animate-spin text-[#1A4516]" size={20} /></div>
                                                 ) : reviews.length > 0 ? (
                                                     reviews.map((r, rIdx) => (
-                                                        <div key={r._id} className="p-5 rounded-2xl border border-slate-100 bg-white hover:shadow-md transition-all">
+                                                        <div key={r._id} className="p-4 rounded-xl border border-slate-100 bg-white hover:shadow-md hover:translate-x-1 transition-all group">
                                                             <div className="flex justify-between items-start mb-2">
                                                                 <div className="flex items-center gap-2">
-                                                                    <div className="h-8 w-8 rounded-full bg-brand-50 flex items-center justify-center text-[10px] font-black text-primary border border-brand-100">{r.userId?.name?.[0] || 'A'}</div>
+                                                                    <div className="h-8 w-8 rounded-full bg-[#F5FBF5] flex items-center justify-center text-[11px] font-black text-[#1A4516] border border-[#1A4516]/20">{r.userId?.name?.[0] || 'A'}</div>
                                                                     <div>
-                                                                        <p className="text-xs font-black text-slate-800">{r.userId?.name || 'Anonymous'}</p>
-                                                                        <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} size={10} className={cn(i < r.rating ? 'text-primary fill-primary' : 'text-slate-200')} />)}</div>
+                                                                        <p className="text-[12px] font-black text-slate-800">{r.userId?.name || 'Anonymous'}</p>
+                                                                        <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <Star key={i} size={9} className={cn(i < r.rating ? 'text-[#1A4516] fill-[#1A4516]' : 'text-slate-200')} />)}</div>
                                                                     </div>
                                                                 </div>
                                                                 <span className="text-[10px] font-bold text-slate-400">{new Date(r.createdAt).toLocaleDateString()}</span>
                                                             </div>
-                                                            <p className="text-xs text-slate-600 font-medium leading-relaxed pl-10">{r.comment}</p>
+                                                            <p className="text-[12px] text-slate-600 font-medium leading-relaxed pl-10">{r.comment}</p>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="py-12 text-center bg-slate-50/50 rounded-3xl border border-dashed border-slate-200">
-                                                        <MessageSquare size={24} className="text-slate-300 mx-auto mb-3" />
-                                                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest">No reviews yet — be the first!</p>
+                                                    <div className="py-10 text-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+                                                        <MessageSquare size={20} className="text-slate-300 mx-auto mb-2" />
+                                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">No reviews yet — be the first!</p>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
                                     </AccordionItem>
                                 </div>
-
-                                <div className="h-24" /> {/* Bottom spacer for sticky bar */}
+                                <div className="h-20" /> {/* Bottom spacer for sticky bar */}
                             </div>
                         </div>
 
                         {/* Sticky Bottom Action Bar */}
-                        <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 pb-6 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-50">
-                            <div className="flex flex-col gap-3">
-                                <div className="flex items-center justify-between gap-4">
-                                    <div className="flex flex-col min-w-[80px]">
-                                        {((selectedVariant?.salePrice && selectedVariant.salePrice < selectedVariant.price) || 
-                                           (!selectedVariant && selectedProduct.originalPrice > selectedProduct.price)) && (
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-sm font-medium text-gray-400 line-through decoration-gray-400/50">
-                                                    ₹{selectedVariant?.price || selectedProduct.originalPrice}
-                                                </span>
-                                                <span className="bg-red-50 text-red-500 text-[10px] font-black px-1.5 py-0.5 rounded leading-none">
-                                                    {selectedVariant
-                                                        ? Math.round(((selectedVariant.price - selectedVariant.salePrice) / selectedVariant.price) * 100)
-                                                        : Math.round(((selectedProduct.originalPrice - selectedProduct.price) / selectedProduct.originalPrice) * 100)}% OFF
-                                                </span>
-                                            </div>
-                                        )}
-                                        <div className="text-2xl font-black text-[#1A1A1A] leading-none mt-1">
-                                            ₹{selectedVariant?.salePrice || selectedVariant?.price || selectedProduct.price}
-                                        </div>
+                        <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 pb-6 z-50">
+                            <div className="flex items-center gap-4">
+                                {quantity > 0 ? (
+                                    <div className="flex items-center justify-between border border-gray-200 rounded-lg px-1 py-1.5 min-w-[100px]">
+                                        <button onClick={handleDecrement} className="text-[#1A4516] font-bold px-3 py-1 flex items-center justify-center">
+                                            <Minus size={16} strokeWidth={3} />
+                                        </button>
+                                        <span className="text-[#111827] font-bold text-sm w-6 text-center">{quantity}</span>
+                                        <button onClick={handleIncrement} className="text-[#1A4516] font-bold px-3 py-1 flex items-center justify-center">
+                                            <Plus size={16} strokeWidth={3} />
+                                        </button>
                                     </div>
-
-                                    {quantity > 0 ? (
-                                        <div className="flex items-center gap-1 bg-slate-50 border-2 border-slate-100 rounded-2xl p-1.5 shadow-inner flex-1 justify-between max-w-[170px]">
-                                            <motion.button
-                                                whileTap={{ scale: 0.9 }}
-                                                onClick={handleDecrement}
-                                                className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-white shadow-sm border border-slate-100 transition-all"
-                                            >
-                                                <Minus size={18} strokeWidth={3.5} />
-                                            </motion.button>
-                                            <span className="font-black text-xl text-slate-800 w-8 text-center tabular-nums">{quantity}</span>
-                                            <motion.button
-                                                whileTap={{ scale: 0.9 }}
-                                                onClick={handleIncrement}
-                                                className="w-10 h-10 bg-gradient-to-br from-primary to-[var(--brand-400)] rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-100/50 hover:shadow-brand-200 transition-all border border-white/20"
-                                            >
-                                                <Plus size={18} strokeWidth={3.5} />
-                                            </motion.button>
-                                        </div>
-                                    ) : (
-                                        <motion.button
-                                            whileHover={{ scale: 1.02 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={handleAddToCart}
-                                            className="flex-1 bg-gradient-to-r from-primary to-[var(--brand-400)] text-white h-[56px] rounded-2xl font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-brand-100 transition-all border border-white/20 uppercase tracking-[0.05em] whitespace-nowrap px-4"
-                                        >
-                                            <ShoppingBag size={18} strokeWidth={3} />
-                                            ADD TO CART
-                                        </motion.button>
-                                    )}
-                                </div>
-
-                                {/* View Cart Button */}
-                                {cartCount > 0 && (
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="mt-2"
-                                    >
-                                        <Link
-                                            to="/checkout"
-                                            onClick={closeProduct}
-                                            className="w-full bg-gradient-to-r from-primary to-[var(--brand-400)] text-white h-[64px] rounded-2xl flex items-center justify-between px-5 shadow-xl shadow-brand-200/50 hover:shadow-brand-300 transition-all active:scale-[0.98] border border-white/20 relative overflow-hidden group"
-                                        >
-                                            <div className="flex flex-col items-start leading-none">
-                                                <span className="text-[13px] font-[1000] uppercase tracking-wide">View cart</span>
-                                                <span className="text-[11px] font-bold opacity-90 mt-1">{cartCount} {cartCount === 1 ? 'item' : 'items'} in cart</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-[16px] font-[1000] tracking-tight">₹{cart.reduce((total, item) => total + (item.price * item.quantity), 0)}</span>
-                                                <ChevronRight size={18} strokeWidth={4} />
-                                            </div>
-                                        </Link>
-                                    </motion.div>
+                                ) : (
+                                    <div className="flex items-center justify-between border border-gray-100 rounded-lg px-1 py-1.5 min-w-[100px] opacity-50 bg-gray-50 pointer-events-none">
+                                        <button className="text-[#1A4516] font-bold px-3 py-1 flex items-center justify-center">
+                                            <Minus size={16} strokeWidth={3} />
+                                        </button>
+                                        <span className="text-[#111827] font-bold text-sm w-6 text-center">1</span>
+                                        <button className="text-[#1A4516] font-bold px-3 py-1 flex items-center justify-center">
+                                            <Plus size={16} strokeWidth={3} />
+                                        </button>
+                                    </div>
                                 )}
+
+                                <button
+                                    onClick={quantity > 0 ? () => {} : handleAddToCart}
+                                    className="flex-1 bg-[#1A4516] text-white rounded-lg py-3 font-medium text-[15px] transition-all hover:bg-[#133010]"
+                                >
+                                    {quantity > 0 ? 'Added to Cart' : 'Add to Cart'}
+                                </button>
                             </div>
                         </div>
                     </motion.div>

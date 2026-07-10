@@ -106,11 +106,11 @@ const SectionRenderer = ({ sections = [], productsById = {}, categoriesById = {}
             <div
               key={section._id || sectionKey}
               id={`section-${section._id}`}
-              className="-mx-2 md:-mx-4 lg:-mx-6 px-2 md:px-4 lg:px-6"
+              className="-mx-2 md:-mx-4 lg:-mx-6 px-2 md:px-4 lg:px-6 -mt-4 relative z-10"
             >
               {heading && (
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-base font-black text-[#1A1A1A]">
+                  <h3 className="text-[18px] sm:text-[20px] font-bold text-[#1A1A1A]">
                     {heading}
                   </h3>
                   <span className="text-[11px] font-semibold text-slate-400">

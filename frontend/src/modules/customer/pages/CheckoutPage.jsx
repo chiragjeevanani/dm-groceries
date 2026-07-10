@@ -858,19 +858,27 @@ const CheckoutPage = () => {
   if (cart.length === 0 && !showSuccess) {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-brand-50/50 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-brand-100/30 rounded-full blur-3xl pointer-events-none animate-pulse" />
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-4 left-4 md:top-8 md:left-8 z-50 w-10 h-10 flex items-center justify-center bg-white border border-slate-200 rounded-full shadow-sm text-slate-600 hover:bg-slate-50 transition-colors"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#F5FBF5]/50 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#1A4516]/5 rounded-full blur-3xl pointer-events-none animate-pulse" />
         <div className="absolute top-40 -left-20 w-60 h-60 bg-yellow-100/40 rounded-full blur-3xl pointer-events-none animate-pulse" />
         <div className="relative z-10 flex flex-col items-center text-center max-w-sm mx-auto">
-          <div ref={emptyCartAnimRef} className="relative w-56 h-56 md:w-64 md:h-64 mb-8 flex items-center justify-center">
+          <div ref={emptyCartAnimRef} className="relative w-40 h-40 md:w-48 md:h-48 mb-6 flex items-center justify-center">
             <motion.div
               animate={emptyCartVisible ? { y: [-8, 8, -8] } : { y: 0 }}
               transition={emptyCartVisible ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
-              className="relative z-10 rounded-[2rem] bg-white/90 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-brand-100">
+              className="relative z-10 rounded-3xl bg-white/90 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100">
               {emptyBoxData ? (
-                <Lottie animationData={emptyBoxData} loop className="h-36 w-36 md:h-44 md:w-44" />
+                <Lottie animationData={emptyBoxData} loop className="h-24 w-24 md:h-28 md:w-28" />
               ) : (
-                <div className="w-56 h-56" />
+                <div className="w-40 h-40" />
               )}
             </motion.div>
             <motion.div
@@ -879,17 +887,17 @@ const CheckoutPage = () => {
               className="absolute inset-0 border-2 border-dashed border-slate-200 rounded-full"
             />
           </div>
-          <h2 className="text-3xl font-black text-slate-800 mb-3 tracking-tight">Your Cart is Empty</h2>
-          <p className="text-slate-500 mb-8 leading-relaxed font-medium">
+          <h2 className="text-xl font-bold text-slate-800 mb-2 tracking-tight">Your Cart is Empty</h2>
+          <p className="text-sm text-slate-500 mb-6 leading-relaxed font-medium">
             It feels lighter than air! <br />
             Explore our aisles and fill it with goodies.
           </p>
           <Link
             to="/"
-            className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary to-[var(--brand-400)] text-white font-bold rounded-2xl overflow-hidden shadow-xl shadow-brand-600/20 transition-all hover:scale-[1.02] active:scale-95 w-full sm:w-auto">
+            className="group relative inline-flex items-center justify-center px-6 py-3 bg-[#1A4516] text-white font-bold rounded-2xl overflow-hidden shadow-lg shadow-[#1A4516]/20 transition-all hover:scale-[1.02] active:scale-95 w-full sm:w-auto">
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-            <span className="relative flex items-center gap-2 text-lg">
-              Start Shopping <ChevronRight size={20} />
+            <span className="relative flex items-center gap-2 text-base">
+              Start Shopping <ChevronRight size={18} />
             </span>
           </Link>
           <div className="mt-8 flex gap-6 text-slate-400">

@@ -753,7 +753,7 @@ const OrderDetailPage = () => {
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-white">
         <Package size={64} className="text-slate-300 mb-4" />
         <h3 className="text-lg font-bold text-slate-800">Order not found</h3>
-        <Link to="/orders" className="text-brand-600 font-bold mt-4 hover:text-brand-700">
+        <Link to="/orders" className="text-[#1A4516] font-bold mt-4 hover:text-[#0a3000]">
           Back to my orders
         </Link>
       </div>
@@ -761,9 +761,9 @@ const OrderDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pb-24 font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pb-16 font-sans">
       {/* Minimal Header */}
-      <div className="bg-white/80 backdrop-blur-md sticky top-0 z-30 px-4 py-3 flex items-center justify-between border-b border-slate-100">
+      <div className="bg-white/80 backdrop-blur-md sticky top-0 z-30 px-3 py-2 flex items-center justify-between border-b border-slate-100">
         <button
           type="button"
           onClick={handleBack}
@@ -772,36 +772,36 @@ const OrderDetailPage = () => {
           <ChevronLeft size={24} className="text-slate-800" />
         </button>
         <div className="flex-1 text-center">
-          <h1 className="text-base font-bold text-slate-800">Order</h1>
+          <h1 className="text-base font-bold text-[#1A4516]">Order</h1>
           <p className="text-xs text-slate-500 font-medium">#{order.orderId.slice(-8)}</p>
         </div>
         <div className="w-10" />
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-4 space-y-4">
+      <div className="max-w-2xl mx-auto px-3 py-2 space-y-3">
         {/* Payment Required Card - Only for Online Pending Orders */}
         {isAwaitingOnlinePayment && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-brand-50 rounded-3xl p-5 shadow-sm border border-brand-100 relative overflow-hidden"
+            className="bg-[#F5FBF5] rounded-2xl p-4 shadow-sm border border-[#1A4516]/20 relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <CreditCard size={64} className="text-brand-600" />
+            <div className="absolute top-0 right-0 p-3 opacity-10">
+              <CreditCard size={64} className="text-[#1A4516]" />
             </div>
             <div className="relative z-10 flex items-center justify-between gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
-                  <h3 className="text-sm font-black text-brand-900 uppercase tracking-tight">Payment Required</h3>
+                  <span className="w-2 h-2 rounded-full bg-[#1A4516] animate-pulse" />
+                  <h3 className="text-sm font-black text-[#1A4516] uppercase tracking-tight">Payment Required</h3>
                 </div>
-                <p className="text-xs text-brand-700 font-medium leading-relaxed">
+                <p className="text-xs text-[#1A4516] font-medium leading-relaxed">
                   Complete your payment of <span className="font-bold">₹{order.pricing.total}</span> to proceed with this order.
                 </p>
               </div>
               <button
                 onClick={handleRetryPayment}
-                className="bg-black  hover:bg-brand-700 text-primary-foreground px-5 py-2.5 rounded-xl text-xs font-black shadow-lg shadow-brand-200 transition-all active:scale-95 flex items-center gap-2 uppercase tracking-wide shrink-0"
+                className="bg-[#1A4516] text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-[#0a3000] active:scale-95 transition-all shadow-md shrink-0"
               >
                 Pay Now <ArrowRight size={14} />
               </button>
@@ -856,7 +856,7 @@ const OrderDetailPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-gradient-to-br from-brand-500 to-brand-600 rounded-3xl p-5 shadow-lg text-white"
+            className="bg-gradient-to-br from-[#1A4516] to-[#0a3000] rounded-3xl p-3.5 shadow-lg text-white"
           >
             <div className="flex items-center gap-4">
               <div className="relative">
@@ -867,7 +867,7 @@ const OrderDetailPage = () => {
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-1 -right-1 bg-white text-brand-600 text-[9px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5 shadow-md">
+                <div className="absolute -bottom-1 -right-1 bg-white text-[#1A4516] text-[9px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5 shadow-md">
                   4.8 ★
                 </div>
               </div>
@@ -893,7 +893,7 @@ const OrderDetailPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100"
+          className="bg-white rounded-3xl p-3.5 shadow-sm border border-slate-100"
         >
           <div className="flex items-start gap-4">
             <div className="h-12 w-12 rounded-2xl bg-orange-50 flex items-center justify-center flex-shrink-0">
@@ -922,28 +922,28 @@ const OrderDetailPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100"
+          className="bg-white rounded-3xl p-3.5 shadow-sm border border-slate-100"
         >
           <div className="flex items-start gap-4">
-            <div className="h-12 w-12 rounded-2xl bg-brand-50 flex items-center justify-center flex-shrink-0">
-              <MapPin size={24} className="text-brand-600" />
+            <div className="h-12 w-12 rounded-2xl bg-[#F5FBF5] flex items-center justify-center flex-shrink-0">
+              <MapPin size={24} className="text-[#1A4516]" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <p className="text-xs font-bold text-brand-600 uppercase tracking-wider">Delivery Address</p>
-                <span className="bg-brand-50 text-brand-700 text-[10px] px-2 py-0.5 rounded-full font-bold">
+                <p className="text-xs font-bold text-[#1A4516] uppercase tracking-wider">Delivery Address</p>
+                <span className="bg-[#F5FBF5] text-[#1A4516] text-[10px] px-2 py-0.5 rounded-full font-bold">
                   {order.address.type}
                 </span>
               </div>
-              <h4 className="font-bold text-slate-900 text-base mb-1">{order.address.name}</h4>
+              <h4 className="font-bold text-[#1A4516] text-base mb-1">{order.address.name}</h4>
               <p className="text-sm text-slate-500 leading-relaxed">
                 {order.address.address}, {order.address.city}
               </p>
               {order.address?.location &&
                 typeof order.address.location.lat === "number" &&
                 typeof order.address.location.lng === "number" && (
-                  <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 bg-brand-50 px-2 py-1 rounded-lg">
-                    <CheckCircle size={14} className="text-brand-600" />
+                  <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#1A4516] bg-[#F5FBF5] px-2 py-1 rounded-lg">
+                    <CheckCircle size={14} className="text-[#1A4516]" />
                     Precise location confirmed
                   </p>
                 )}
@@ -960,9 +960,9 @@ const OrderDetailPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100"
+          className="bg-white rounded-3xl p-3.5 shadow-sm border border-slate-100"
         >
-          <h3 className="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <h3 className="text-base font-bold text-[#1A4516] mb-3 flex items-center gap-2">
             <Package size={18} className="text-slate-400" />
             Order Items
           </h3>
@@ -1002,9 +1002,9 @@ const OrderDetailPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100"
+          className="bg-white rounded-3xl p-3.5 shadow-sm border border-slate-100"
         >
-          <h3 className="text-base font-bold text-slate-800 mb-4">Bill Summary</h3>
+          <h3 className="text-base font-bold text-[#1A4516] mb-3">Bill Summary</h3>
           <div className="space-y-2.5 text-sm">
             <div className="flex justify-between text-slate-600">
               <span>Item Total</span>
@@ -1014,7 +1014,7 @@ const OrderDetailPage = () => {
               <span>Delivery Fee</span>
               <span
                 className={
-                  order.pricing.deliveryFee === 0 ? "text-brand-600 font-bold" : "font-semibold"
+                  order.pricing.deliveryFee === 0 ? "text-[#1A4516] font-bold" : "font-semibold"
                 }>
                 {order.pricing.deliveryFee === 0
                   ? "FREE"
@@ -1031,7 +1031,7 @@ const OrderDetailPage = () => {
               <span className="text-base font-bold text-slate-900">
                 Total Amount
               </span>
-              <span className="text-xl font-black text-brand-600">
+              <span className="text-xl font-black text-[#1A4516]">
                 ₹{order.pricing.total}
               </span>
             </div>
@@ -1082,10 +1082,10 @@ const OrderDetailPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-white rounded-3xl p-5 shadow-sm border border-slate-100"
+            className="bg-white rounded-3xl p-3.5 shadow-sm border border-slate-100"
           >
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-base font-bold text-slate-800">
+              <h3 className="text-base font-bold text-[#1A4516]">
                 Return & Refund
               </h3>
               {canRequestReturn() && returnCountdown !== 0 && (
@@ -1104,21 +1104,21 @@ const OrderDetailPage = () => {
 
                 {/* Return OTP Display for Customer if pickup is assigned */}
                 {returnDetails.returnStatus === "return_pickup_assigned" && (
-                  <div className="bg-brand-50 rounded-2xl p-4 border border-brand-100">
+                  <div className="bg-[#F5FBF5] rounded-2xl p-4 border border-[#1A4516]/20">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="h-8 w-8 rounded-full bg-brand-100 flex items-center justify-center">
-                        <Truck size={16} className="text-brand-600" />
+                      <div className="h-8 w-8 rounded-full bg-[#1A4516]/10 flex items-center justify-center">
+                        <Truck size={16} className="text-[#1A4516]" />
                       </div>
-                      <p className="text-sm font-bold text-brand-900">Return Pickup Assigned</p>
+                      <p className="text-sm font-bold text-[#1A4516]">Return Pickup Assigned</p>
                     </div>
-                    <p className="text-xs text-brand-700 mb-3 ml-11">
+                    <p className="text-xs text-[#1A4516]/80 mb-3 ml-11">
                       A delivery partner is coming to collect your return. Please share this OTP when they arrive:
                     </p>
                     <div className="ml-11 flex items-center gap-2">
                       {handoffOtp ? (
                         <div className="flex gap-2">
                           {handoffOtp.split('').map((digit, i) => (
-                            <div key={i} className="h-10 w-8 bg-white border-2 border-brand-200 rounded-lg flex items-center justify-center text-lg font-black text-brand-700 shadow-sm">
+                            <div key={i} className="h-10 w-8 bg-white border-2 border-[#1A4516]/30 rounded-lg flex items-center justify-center text-lg font-black text-[#1A4516] shadow-sm">
                               {digit}
                             </div>
                           ))}
@@ -1138,9 +1138,9 @@ const OrderDetailPage = () => {
                 )}
                 {returnDetails.returnRefundAmount > 0 &&
                   returnDetails.returnStatus === "refund_completed" && (
-                    <div className="bg-brand-50 p-4 rounded-2xl border border-brand-100">
-                      <p className="text-xs font-bold text-brand-800 uppercase tracking-wider mb-1">Refund Successful</p>
-                      <p className="text-sm text-brand-700 font-medium">
+                    <div className="bg-[#F5FBF5] p-4 rounded-2xl border border-[#1A4516]/20">
+                      <p className="text-xs font-bold text-[#1A4516] uppercase tracking-wider mb-1">Refund Successful</p>
+                      <p className="text-sm text-[#1A4516] font-medium">
                         ₹{returnDetails.returnRefundAmount} has been credited to your {order.paymentMethod === 'cod' ? 'hand (Cash)' : 'wallet'}.
                       </p>
                     </div>

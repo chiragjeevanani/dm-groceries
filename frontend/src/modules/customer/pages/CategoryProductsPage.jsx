@@ -165,7 +165,7 @@ const CategoryProductsPage = () => {
                             )}
                         </div>
                         <h3 className="text-3xl font-[1000] text-slate-800 tracking-tighter mb-4 uppercase">
-                            Service <span className="text-primary">Unavailable</span>
+                            Service <span className="text-[#1A4516]">Unavailable</span>
                         </h3>
                         <p className="text-slate-500 font-bold text-sm max-w-[280px] mb-8 leading-relaxed">
                             {settings?.appName || 'Our service'} is not available in your area yet. We're expanding fast!
@@ -188,7 +188,7 @@ const CategoryProductsPage = () => {
                                     className={cn(
                                         "flex flex-col items-center py-4 px-1 gap-2 transition-all relative border-l-4",
                                         selectedSubCategory === cat.id
-                                            ? "bg-[#F7FCF5] border-primary"
+                                            ? "bg-[#F5FBF5] border-[#1A4516]"
                                             : "border-transparent hover:bg-gray-50"
                                     )}
                                 >
@@ -200,7 +200,7 @@ const CategoryProductsPage = () => {
                                     </div>
                                     <span className={cn(
                                         "text-[10px] text-center font-bold font-sans leading-tight px-1",
-                                        selectedSubCategory === cat.id ? "text-primary" : "text-gray-600"
+                                        selectedSubCategory === cat.id ? "text-[#1A4516]" : "text-gray-600"
                                     )}>
                                         {cat.name}
                                     </span>

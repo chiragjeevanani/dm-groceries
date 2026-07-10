@@ -143,7 +143,7 @@ const CategoriesPage = () => {
                 {groups.map((group, groupIdx) => (
                     <div key={groupIdx} className="mb-10 animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${groupIdx * 100}ms` }}>
                         {/* Group Title */}
-                        <h2 className="text-xl md:text-2xl font-black text-[#1A1A1A] mb-6 px-1">
+                        <h2 className="text-xl md:text-2xl font-bold text-[#1A4516] mb-6 px-1">
                             {group.title}
                         </h2>
 
