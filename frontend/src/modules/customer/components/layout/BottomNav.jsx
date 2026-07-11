@@ -69,5 +69,3 @@ const BottomNav = () => {
 };
 
 export default BottomNav;
-
-/* push */}
