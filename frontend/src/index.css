@@ -286,6 +286,14 @@ body {
     font-weight: 600; /* was 500 */
   }
 
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   /* Custom Scrollbar Utilities */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;

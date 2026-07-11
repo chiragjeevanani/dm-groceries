@@ -214,7 +214,7 @@ const Returns = () => {
             <BlurFade delay={0.1}>
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
                     <div className="min-w-0">
-                        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex flex-wrap items-center gap-2">
+                        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 flex flex-wrap items-center gap-2">
                             Return Requests
                             <Badge
                                 variant="secondary"
@@ -249,7 +249,7 @@ const Returns = () => {
                 </div>
             ) : (
                 <>
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-[850px]">
                         {["Requested", "Approved", "Rejected", "Completed"].map(
                             (label, i) => {
                                 const count = returns.filter(
@@ -259,17 +259,17 @@ const Returns = () => {
                                     <BlurFade key={label} delay={0.1 + i * 0.05}>
                                         <MagicCard
                                             className="border-none shadow-sm ring-1 ring-slate-100 p-0 overflow-hidden group bg-white"
-                                            gradientColor="#eef2ff"
+                                            gradientColor="#ecfdf5"
                                         >
-                                            <div className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 relative z-10">
-                                                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg flex items-center justify-center bg-slate-900 text-white shadow-sm shrink-0">
-                                                    <HiOutlineInboxStack className="h-5 w-5 sm:h-6 sm:w-6" />
+                                            <div className="flex items-center gap-2.5 p-2.5 relative z-10">
+                                                <div className="h-9 w-9 rounded-full flex items-center justify-center bg-emerald-50 text-emerald-700 shadow-sm shrink-0">
+                                                    <HiOutlineInboxStack className="h-4 w-4" />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <p className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-widest truncate">
+                                                    <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider truncate">
                                                         {label}
                                                     </p>
-                                                    <h4 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">
+                                                    <h4 className="text-lg font-bold text-slate-800 leading-tight mt-0.5">
                                                         {count}
                                                     </h4>
                                                 </div>
@@ -280,7 +280,7 @@ const Returns = () => {
                             }
                         )}
                     </div>
-
+ 
                     <BlurFade delay={0.2}>
                         <Card className="border-none shadow-xl ring-1 ring-slate-100 rounded-lg bg-white overflow-hidden">
                             <div className="border-b border-slate-100 bg-slate-50/30 overflow-x-auto scrollbar-hide">
@@ -290,34 +290,34 @@ const Returns = () => {
                                             key={tab}
                                             onClick={() => setActiveTab(tab)}
                                             className={cn(
-                                                "relative py-3 sm:py-4 px-2.5 sm:px-4 text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300",
+                                                "relative py-3 px-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-300",
                                                 activeTab === tab
-                                                    ? "text-primary scale-105"
+                                                    ? "text-[#1A4516] scale-105 font-bold"
                                                     : "text-slate-600 hover:text-slate-700"
                                             )}
                                         >
                                             {tab}
                                             {activeTab === tab && (
                                                 <motion.div
-                                                    layoutId="returns-tab-underline"
-                                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full mx-2 sm:mx-4"
+                                                    layoutId="tab-underline"
+                                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1A4516] rounded-full mx-2"
                                                 />
                                             )}
                                         </button>
                                     ))}
                                 </div>
                             </div>
-
+ 
                             <div className="p-3 sm:p-4">
                                 {filteredReturns.length === 0 ? (
                                     <div className="flex flex-col items-center justify-center py-16 px-4">
                                         <div className="h-14 w-14 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300 mb-3">
                                             <HiOutlineInboxStack className="h-7 w-7" />
                                         </div>
-                                        <h3 className="text-sm font-bold text-slate-900">
+                                        <h3 className="text-sm font-semibold text-slate-800">
                                             No return requests found
                                         </h3>
-                                        <p className="text-xs text-slate-600 font-medium text-center mt-1">
+                                        <p className="text-xs text-slate-500 font-medium text-center mt-1">
                                             You will see customer return requests here.
                                         </p>
                                     </div>
@@ -332,10 +332,10 @@ const Returns = () => {
                                                     className="min-w-0 flex-1 cursor-pointer"
                                                     onClick={() => openDetails(ret)}
                                                 >
-                                                    <p className="text-xs font-black text-slate-900 truncate">
+                                                    <p className="text-xs font-semibold text-slate-800 truncate">
                                                         #{ret.orderId}
                                                     </p>
-                                                    <p className="text-xs font-semibold text-slate-600 mt-0.5 flex items-center gap-1">
+                                                    <p className="text-xs font-medium text-slate-500 mt-0.5 flex items-center gap-1">
                                                         <HiOutlineCalendarDays className="h-3 w-3 shrink-0" />
                                                         {ret.returnRequestedAt
                                                             ? new Date(
@@ -348,7 +348,7 @@ const Returns = () => {
                                                             })
                                                             : "N/A"}
                                                     </p>
-                                                    <p className="text-xs font-bold text-slate-800 mt-1">
+                                                    <p className="text-xs font-semibold text-slate-700 mt-1">
                                                         {ret.customer?.name || "Customer"}
                                                     </p>
                                                     <p className="text-xs text-slate-500 mt-1 line-clamp-2">
@@ -357,9 +357,9 @@ const Returns = () => {
                                                     </p>
                                                     {/* Proper Data: Rider tracking for in-transit */}
                                                     {(ret.returnStatus === "return_in_transit" || ret.returnStatus === "return_drop_pending" || ret.returnStatus === "return_pickup_assigned") && ret.returnDeliveryBoy && (
-                                                        <div className="mt-2 flex items-center gap-1.5 px-2 py-1 bg-brand-50 rounded-lg border border-brand-100 w-fit">
-                                                            <HiOutlineTruck className="h-3 w-3 text-brand-600" />
-                                                            <span className="text-[10px] font-bold text-brand-700">Rider: {ret.returnDeliveryBoy.name}</span>
+                                                        <div className="mt-2 flex items-center gap-1.5 px-2 py-1 bg-emerald-50 rounded-lg border border-emerald-100/50 w-fit">
+                                                            <HiOutlineTruck className="h-3 w-3 text-emerald-700" />
+                                                            <span className="text-[10px] font-semibold text-emerald-800">Rider: {ret.returnDeliveryBoy.name}</span>
                                                         </div>
                                                     )}
                                                     {/* Proper Data: QC Note for passed/failed */}
@@ -375,11 +375,11 @@ const Returns = () => {
                                                         variant={getStatusVariant(
                                                             ret.returnStatus
                                                         )}
-                                                        className="text-[10px] font-black uppercase px-2 py-0"
+                                                        className="text-[10px] font-semibold uppercase px-2 py-0"
                                                     >
                                                         {mapReturnStatusLabel(ret.returnStatus)}
                                                     </Badge>
-                                                    <p className="text-xs font-black text-slate-900">
+                                                    <p className="text-xs font-semibold text-slate-800">
                                                         {"\u20B9"}
                                                         {ret.returnRefundAmount ||
                                                             ret.pricing?.subtotal ||

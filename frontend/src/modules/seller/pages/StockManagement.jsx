@@ -123,10 +123,10 @@ const StockManagement = () => {
     }, [activeView, filterStatus]);
 
     const stats = useMemo(() => [
-        { label: 'Total Inventory', value: inventory.reduce((acc, item) => acc + item.stock, 0), icon: HiOutlineCube, color: 'text-brand-600', bg: 'bg-brand-50', status: 'All' },
-        { label: 'Low Stock Items', value: inventory.filter(i => i.stock > 0 && i.stock <= i.threshold).length, icon: HiOutlineExclamationTriangle, color: 'text-amber-600', bg: 'bg-amber-50', status: 'Low Stock' },
-        { label: 'Out of Stock', value: inventory.filter(i => i.stock === 0).length, icon: HiOutlineArchiveBoxXMark, color: 'text-rose-600', bg: 'bg-rose-50', status: 'Out of Stock' },
-        { label: 'Stock Valuation', value: `₹${inventory.reduce((acc, item) => acc + (item.stock * item.price), 0).toLocaleString()}`, icon: HiOutlineArrowsUpDown, color: 'text-brand-600', bg: 'bg-brand-50', status: 'In Stock' }
+        { label: 'Total Inventory', value: inventory.reduce((acc, item) => acc + item.stock, 0), icon: HiOutlineCube, color: 'text-emerald-700', bg: 'bg-emerald-50', status: 'All' },
+        { label: 'Low Stock Items', value: inventory.filter(i => i.stock > 0 && i.stock <= i.threshold).length, icon: HiOutlineExclamationTriangle, color: 'text-amber-700', bg: 'bg-amber-50', status: 'Low Stock' },
+        { label: 'Out of Stock', value: inventory.filter(i => i.stock === 0).length, icon: HiOutlineArchiveBoxXMark, color: 'text-rose-700', bg: 'bg-rose-50', status: 'Out of Stock' },
+        { label: 'Stock Valuation', value: `₹${inventory.reduce((acc, item) => acc + (item.stock * item.price), 0).toLocaleString()}`, icon: HiOutlineArrowsUpDown, color: 'text-emerald-700', bg: 'bg-emerald-50', status: 'In Stock' }
     ], [inventory]);
 
     const filteredInventory = useMemo(() => {
@@ -198,7 +198,7 @@ const StockManagement = () => {
             {activeView === 'inventory' ? (
                 <>
                     {/* Quick Stats */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-[850px]">
                         {stats.map((stat, i) => (
                             <BlurFade key={i} delay={0.1 + (i * 0.05)}>
                                 <div onClick={() => setFilterStatus(stat.status)} className="cursor-pointer">
@@ -206,13 +206,13 @@ const StockManagement = () => {
                                         className="border-none shadow-sm ring-1 ring-slate-100 p-0 overflow-hidden group bg-white"
                                         gradientColor="#f8fafc"
                                     >
-                                        <div className="flex items-center gap-3 p-4 relative z-10">
-                                            <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 duration-300 shadow-sm", stat.bg, stat.color)}>
-                                                <stat.icon className="h-5 w-5" />
+                                        <div className="flex items-center gap-2.5 p-2.5 relative z-10">
+                                            <div className={cn("h-9 w-9 rounded-full flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-105 duration-300", stat.bg, stat.color)}>
+                                                <stat.icon className="h-4 w-4" />
                                             </div>
                                             <div>
-                                                <p className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-widest">{stat.label}</p>
-                                                <h4 className="text-xl font-black text-slate-900 tracking-tight">{stat.value}</h4>
+                                                <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{stat.label}</p>
+                                                <h4 className="text-lg font-bold text-slate-800 leading-tight mt-0.5">{stat.value}</h4>
                                             </div>
                                         </div>
                                     </MagicCard>
@@ -227,10 +227,10 @@ const StockManagement = () => {
                             <div className="p-4 border-b border-slate-50 flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-50/30">
                                 <div className="flex flex-col md:flex-row gap-3 items-center w-full">
                                     <div className="relative w-full md:w-72">
-                                        <HiOutlineMagnifyingGlass className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-600" />
+                                        <HiOutlineMagnifyingGlass className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
                                         <Input
                                             placeholder="Search by product name or SKU..."
-                                            className="pl-10 pr-4 py-2.5 rounded-2xl border-none ring-1 ring-slate-200 bg-white focus:ring-2 focus:ring-primary/20 transition-all text-xs font-semibold"
+                                            className="pl-10 pr-4 py-2.5 rounded-2xl border-none ring-1 ring-slate-200 bg-white focus:ring-2 focus:ring-[#1A4516]/10 transition-all text-xs font-semibold"
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                         />
@@ -246,7 +246,7 @@ const StockManagement = () => {
                                                 className={cn(
                                                     "px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all",
                                                     filterStatus === status
-                                                        ? "bg-white text-slate-900 shadow-md"
+                                                        ? "bg-white text-[#1A4516] shadow-md"
                                                         : "text-slate-600 hover:text-slate-700"
                                                 )}
                                             >
@@ -256,13 +256,13 @@ const StockManagement = () => {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Button
+                                    <button
                                         onClick={() => navigate('/seller/products/add')}
-                                        className="rounded-xl px-4 py-2 text-[10px] font-bold shadow-lg shadow-primary/20"
+                                        className="rounded-xl px-4 py-2 text-[10px] font-bold bg-[#1A4516] hover:bg-[#133A10] text-white shadow-lg shadow-[#1A4516]/10 flex items-center transition-all"
                                     >
                                         <HiOutlinePlus className="h-4 w-4 mr-2" />
                                         ADD NEW PRODUCT
-                                    </Button>
+                                    </button>
                                 </div>
                             </div>
 
@@ -271,11 +271,11 @@ const StockManagement = () => {
                                 <table className="w-full text-left">
                                     <thead>
                                         <tr className="bg-slate-50/50 border-b border-slate-100">
-                                            <th className="px-6 py-4 text-xs font-black text-slate-600 uppercase tracking-widest">Product Information</th>
-                                            <th className="px-6 py-4 text-xs font-black text-slate-600 uppercase tracking-widest">Inventory Capacity</th>
-                                            <th className="px-6 py-4 text-xs font-black text-slate-600 uppercase tracking-widest">Stock Health</th>
-                                            <th className="px-6 py-4 text-xs font-black text-slate-600 uppercase tracking-widest">Price</th>
-                                            <th className="px-6 py-4 text-xs font-black text-slate-600 uppercase tracking-widest text-right whitespace-nowrap">Actions</th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Product Information</th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Inventory Capacity</th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Stock Health</th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Price</th>
+                                            <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right whitespace-nowrap">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-50">
@@ -310,10 +310,10 @@ const StockManagement = () => {
                                                                         )}
                                                                     </div>
                                                                     <div>
-                                                                        <h4 className="text-sm font-black text-slate-900 group-hover:text-primary transition-colors">
+                                                                        <h4 className="text-sm font-semibold text-slate-800 group-hover:text-[#1A4516] transition-colors">
                                                                             {item.name}
                                                                         </h4>
-                                                                        <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">
+                                                                        <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">
                                                                             Product Code: {item.sku || 'N/A'}
                                                                         </p>
                                                                     </div>
@@ -324,14 +324,14 @@ const StockManagement = () => {
                                                                     <div className="flex flex-col">
                                                                         <span
                                                                             className={cn(
-                                                                                "text-sm font-black",
-                                                                                item.stock <= item.threshold ? "text-rose-600" : "text-slate-900"
+                                                                                "text-sm font-semibold",
+                                                                                item.stock <= item.threshold ? "text-rose-600" : "text-slate-800"
                                                                             )}
                                                                         >
                                                                             {item.stock} units
                                                                         </span>
                                                                         {item.stock <= item.threshold && (
-                                                                            <span className="text-[9px] font-bold text-rose-500 bg-rose-50 px-1.5 py-0.5 rounded w-fit mt-0.5">
+                                                                            <span className="text-[9px] font-medium text-rose-500 bg-rose-50 px-1.5 py-0.5 rounded w-fit mt-0.5">
                                                                                 Low Stock
                                                                             </span>
                                                                         )}
@@ -341,13 +341,13 @@ const StockManagement = () => {
                                                             <td className="px-6 py-5">
                                                                 <Badge
                                                                     variant={item.status === 'In Stock' ? 'success' : 'destructive'}
-                                                                    className="text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg"
+                                                                    className="text-[9px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-lg"
                                                                 >
                                                                     {item.status}
                                                                 </Badge>
                                                             </td>
                                                             <td className="px-6 py-5">
-                                                                <p className="text-sm font-black text-slate-900">₹{item.price}</p>
+                                                                <p className="text-sm font-semibold text-slate-800">₹{item.price}</p>
                                                             </td>
                                                             <td className="px-6 py-5 text-right">
                                                                 <button

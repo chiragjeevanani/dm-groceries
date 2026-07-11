@@ -92,8 +92,8 @@ const SidebarItem = ({
             </div>
             <span
               className={cn(
-                "text-xs tracking-tight transition-all duration-300",
-                isChildActive || isOpen ? "font-bold" : "font-semibold",
+                "text-[15px] font-medium tracking-wide transition-all duration-300",
+                (isChildActive || isOpen) ? "text-white font-semibold" : (isSeller ? "text-emerald-100/70 group-hover:text-white" : "text-gray-400 group-hover:text-white"),
               )}>
               {item.label}
             </span>
@@ -155,6 +155,9 @@ const SidebarItem = ({
     );
   }
 
+  const { role } = useAuth();
+  const isSeller = role === "seller";
+
   return (
     <NavLink
       to={item.path}
@@ -165,8 +168,8 @@ const SidebarItem = ({
         cn(
           "flex items-center space-x-2.5 rounded-lg px-3 py-2.5 transition-all duration-300 group relative overflow-hidden",
           isActive
-            ? "bg-primary text-primary-foreground"
-            : "text-gray-400 hover:text-white",
+            ? (isSeller ? "bg-white/10 text-white font-bold" : "bg-primary text-primary-foreground")
+            : (isSeller ? "text-emerald-100/60 hover:text-white" : "text-gray-400 hover:text-white"),
         )
       }>
       {({ isActive }) => (
@@ -193,14 +196,14 @@ const SidebarItem = ({
               "p-1.5 rounded-lg transition-all duration-500 shadow-md z-10",
               isActive
                 ? "bg-white/20 text-white"
-                : "bg-white/5 text-gray-500 group-hover:bg-white/10 group-hover:text-gray-300",
+                : (isSeller ? "bg-white/5 text-emerald-400 group-hover:bg-white/10 group-hover:text-emerald-200" : "bg-white/5 text-gray-500 group-hover:bg-white/10 group-hover:text-gray-300"),
             )}>
             {item.icon && <item.icon className="h-4 w-4" />}
           </div>
           <span
             className={cn(
-              "text-xs tracking-tight transition-all duration-300 z-10",
-              isActive ? "font-bold" : "font-semibold",
+              "text-[15px] font-medium tracking-wide transition-all duration-300 z-10",
+              isActive ? "text-white font-semibold" : (isSeller ? "text-emerald-100/70 group-hover:text-white" : "text-gray-400 group-hover:text-white"),
             )}>
             {item.label}
           </span>
@@ -210,7 +213,7 @@ const SidebarItem = ({
             </span>
           )}
           {isActive && (
-            <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/30 rounded-l-full animate-in slide-in-from-right-1" />
+            <div className={cn("absolute right-0 top-0 bottom-0 w-1 rounded-l-full animate-in slide-in-from-right-1", isSeller ? "bg-emerald-400" : "bg-white/30")} />
           )}
         </>
       )}
@@ -221,34 +224,55 @@ const SidebarItem = ({
 const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hoveredIdx, setHoveredIdx }) => {
   const { settings } = useSettings();
   const appName = settings?.appName || 'App';
+  const { role } = useAuth();
+  const isSeller = role === "seller";
 
   return (
     <div className="flex flex-col h-full min-h-0">
-      <div className="flex-shrink-0 flex h-16 items-center justify-between px-5 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent z-10">
-        <div className="flex items-center space-x-2.5">
-          {settings?.logoUrl ? (
-            <div className="h-9 w-9 rounded-xl overflow-hidden shadow-sm ring-1 ring-white/10 group-hover:scale-110 transition-all duration-500 ease-out">
-              <img src={settings.logoUrl} alt={appName} className="h-full w-full object-contain" />
+      <div className={cn(
+        "flex-shrink-0 flex h-16 items-center justify-between px-5 z-10",
+        isSeller ? "bg-white border-b border-slate-100" : "border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent"
+      )}>
+        {isSeller ? (
+          <div className="flex items-center space-x-2.5">
+            <div className="h-9 w-9 rounded-full overflow-hidden shadow-xs ring-1 ring-[#1A4516]/10 flex items-center justify-center bg-[#1A4516]/5 p-0.5">
+              <img src="/Logo.png" alt="DM Groceries" className="h-full w-full object-contain" />
             </div>
-          ) : (
-            <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm transform -rotate-6 hover:rotate-0 transition-all duration-500 ease-out">
-              <span className="text-lg font-black italic">{appName.charAt(0)}</span>
+            <div>
+              <h1 className="text-sm font-black tracking-tight text-[#1A4516] leading-none uppercase">
+                DM Groceries
+              </h1>
+              <span className="text-[9px] font-black text-[#1A4516]/70 uppercase tracking-wider mt-0.5 block">
+                Seller Panel
+              </span>
             </div>
-          )}
-          <div>
-            <h1 className="text-base font-black tracking-tight text-white leading-none">
-              {appName}
-            </h1>
-            <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] mt-1 block">
-              {title}
-            </span>
           </div>
-        </div>
+        ) : (
+          <div className="flex items-center space-x-2.5">
+            {settings?.logoUrl ? (
+              <div className="h-9 w-9 rounded-xl overflow-hidden shadow-sm ring-1 ring-white/10 group-hover:scale-110 transition-all duration-500 ease-out">
+                <img src={settings.logoUrl} alt={appName} className="h-full w-full object-contain" />
+              </div>
+            ) : (
+              <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm transform -rotate-6 hover:rotate-0 transition-all duration-500 ease-out">
+                <span className="text-lg font-black italic">{appName.charAt(0)}</span>
+              </div>
+            )}
+            <div>
+              <h1 className="text-base font-black tracking-tight text-white leading-none">
+                {appName}
+              </h1>
+              <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] mt-1 block">
+                {title}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Mobile Close Button */}
         <button
           onClick={onClose}
-          className="p-2 md:hidden text-gray-500 hover:text-white transition-colors"
+          className={cn("p-2 md:hidden transition-colors", isSeller ? "text-slate-500 hover:text-slate-800" : "text-gray-500 hover:text-white")}
         >
           <X className="h-5 w-5" />
         </button>
@@ -257,10 +281,10 @@ const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hovered
       <nav
         data-lenis-prevent
         onMouseLeave={() => setHoveredIdx(null)}
-        className="mt-4 px-3 space-y-1.5 flex-1 overflow-y-auto overscroll-contain custom-scrollbar-dark min-h-0 pb-6 relative z-20"
+        className="mt-4 px-3 space-y-1.5 flex-1 overflow-y-auto overscroll-contain no-scrollbar min-h-0 pb-6 relative z-20"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        <p className="px-3 text-[9px] font-black text-gray-600 uppercase tracking-[0.3em] mb-3">
+        <p className={cn("px-3 text-[9px] font-black uppercase tracking-[0.3em] mb-3", isSeller ? "text-white/70" : "text-gray-600")}>
           Core Management
         </p>
         <AnimatePresence>
@@ -282,10 +306,19 @@ const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hovered
       </nav>
 
       <div className="p-4 border-t border-white/5 bg-gradient-to-t from-white/[0.02] to-transparent flex-shrink-0">
-        <div className="bg-white/5 rounded-lg p-3 shadow-sm border border-white/5 hover:bg-white/[0.08] hover:border-white/10 transition-all group cursor-pointer">
+        <div className={cn(
+          "rounded-lg p-3 shadow-sm border transition-all group cursor-pointer",
+          isSeller 
+            ? "bg-white/5 border-emerald-950/20 hover:bg-emerald-950/20 hover:border-emerald-900/40" 
+            : "bg-white/5 border-white/5 hover:bg-white/[0.08] hover:border-white/10"
+        )}>
           <div className="flex items-center space-x-2.5">
             <div className="relative group">
-              {settings?.logoUrl ? (
+              {isSeller ? (
+                <div className="h-8 w-8 rounded-lg overflow-hidden border border-white/10 shadow-lg group-hover:scale-110 transition-all duration-500 bg-white/10 p-0.5">
+                  <img src="/Logo.png" alt="DM Groceries" className="h-full w-full object-contain" />
+                </div>
+              ) : settings?.logoUrl ? (
                 <div className="h-8 w-8 rounded-lg overflow-hidden border border-white/10 shadow-lg group-hover:scale-110 transition-all duration-500">
                   <img src={settings.logoUrl} alt={appName} className="h-full w-full object-contain" />
                 </div>
@@ -297,7 +330,7 @@ const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hovered
               <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-brand-500 rounded-full border-2 border-[#0a0c10] shadow-sm animate-pulse"></div>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-white truncate group-hover:text-primary transition-colors">
+              <p className={cn("text-xs font-bold text-white truncate transition-colors", isSeller ? "group-hover:text-emerald-400" : "group-hover:text-primary")}>
                 {title?.toLowerCase().includes('seller') ? 'Seller Console' : 'Admin Console'}
               </p>
               <p className="text-[9px] text-gray-500 truncate font-black uppercase tracking-widest">
@@ -313,6 +346,7 @@ const SidebarContent = ({ items, title, onClose, openMenu, handleToggle, hovered
 
 const Sidebar = ({ items, title, isOpen, onClose }) => {
   const { role } = useAuth();
+  const isSeller = role === "seller";
   const [openMenu, setOpenMenu] = useState(null);
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
@@ -334,7 +368,8 @@ const Sidebar = ({ items, title, isOpen, onClose }) => {
     <>
       {/* Desktop Sidebar */}
       <aside className={cn(
-        "fixed left-0 inset-y-0 w-72 bg-[#0a0c10] text-gray-400 border-r border-white/5 shadow-[20px_0_60px_rgba(0,0,0,0.4)] md:flex flex-col z-50 transition-all duration-300",
+        "fixed left-0 inset-y-0 w-72 text-gray-400 border-r shadow-[20px_0_60px_rgba(0,0,0,0.4)] md:flex flex-col z-50 transition-all duration-300",
+        isSeller ? "bg-[#052516] border-emerald-950/20 text-emerald-100/70" : "bg-[#0a0c10] text-gray-400 border-r border-white/5",
         (role === "admin" || role === "seller") ? "hidden md:flex" : "flex",
       )}>
         <SidebarContent {...commonProps} />
@@ -361,7 +396,10 @@ const Sidebar = ({ items, title, isOpen, onClose }) => {
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 300, mass: 0.8 }}
-                className="flex-1 bg-[#0a0c10] shadow-2xl flex flex-col pointer-events-auto min-h-0"
+                className={cn(
+                  "flex-1 shadow-2xl flex flex-col pointer-events-auto min-h-0",
+                  isSeller ? "bg-[#052516]" : "bg-[#0a0c10]"
+                )}
               >
                 <SidebarContent {...commonProps} />
               </motion.div>
