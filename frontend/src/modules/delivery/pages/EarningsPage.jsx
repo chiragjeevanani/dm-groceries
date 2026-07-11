@@ -3,6 +3,7 @@ import {
   BarChart,
   Bar,
   XAxis,
+  YAxis,
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
@@ -81,65 +82,76 @@ const EarningsPage = () => {
     );
   }
 
-  return (
-    <div className="bg-gray-50/50 min-h-screen pb-24">
-      <div className="bg-white shadow-sm p-6 sticky top-0 z-30">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="ds-h2 text-gray-900">My Earnings</h1>
-          <Button variant="ghost" size="icon">
-            <Download size={20} className="text-gray-600" />
-          </Button>
-        </div>
+  const maxVal = Math.max(...(earningsData.chartData || []).map(d => (d.earnings || 0) + (d.incentives || 0)), 0);
 
-        <div className="flex bg-gray-100 p-1 rounded-xl">
+  return (
+    <div className="bg-white min-h-screen pb-28 relative overflow-hidden font-sans">
+      
+      {/* Deep Green Header Banner */}
+      <div className="bg-[#1A4516] text-white pt-4 pb-12 px-6 relative">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-lg font-black leading-tight tracking-tight">My Earnings</h1>
+            <p className="text-[11px] text-white/70 font-medium mt-0.5">Track your commission & tips</p>
+          </div>
+          <button
+            onClick={() => toast.success("Downloading earnings report...")}
+            className="p-2.5 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full transition-colors cursor-pointer"
+            aria-label="Download Report"
+          >
+            <Download size={18} className="text-white" />
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content Area overlapping with rounded corners */}
+      <div className="bg-white rounded-t-[32px] -mt-5 pt-4 px-5 space-y-4 relative z-10">
+        
+        {/* Tabs */}
+        <div className="flex bg-gray-100/80 p-1 rounded-xl">
           {["today", "weekly", "monthly"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all capitalize ${
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all capitalize ${
                 activeTab === tab
-                  ? "bg-white text-primary shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white text-[#1A4516] shadow-sm"
+                  : "text-gray-400 hover:text-gray-600"
               }`}
             >
               {tab}
             </button>
           ))}
         </div>
-      </div>
 
-      <motion.div
-        className="p-6 space-y-6 max-w-lg mx-auto"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div variants={itemVariants}>
-          <div className="bg-gradient-to-br from-primary to-brand-600 rounded-2xl p-6 text-white shadow-lg shadow-primary/30 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-2xl" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-10 -mb-10 blur-xl" />
+        {/* Total Earnings Card */}
+        <motion.div variants={itemVariants} className="w-full">
+          <div className="bg-gradient-to-br from-[#1A4516] to-[#123610] rounded-2xl p-3.5 text-white shadow-md shadow-[#1A4516]/10 relative overflow-hidden">
+            {/* Background patterns */}
+            <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-6 -mt-6 blur-xl" />
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-white/5 rounded-full -ml-6 -mb-6 blur-lg" />
 
-            <p className="text-brand-100 font-medium text-sm uppercase tracking-wide mb-1 relative z-10">
+            <p className="text-white/60 font-bold text-[9px] uppercase tracking-wider mb-0.5 relative z-10">
               Total Earnings
             </p>
-            <div className="flex items-baseline mb-6 relative z-10">
-              <span className="text-3xl font-bold mr-1">{RUPEE}</span>
-              <span className="text-5xl font-extrabold tracking-tight">
+            <div className="flex items-baseline mb-2 relative z-10">
+              <span className="text-xl font-bold mr-0.5">{RUPEE}</span>
+              <span className="text-3xl font-black tracking-tight">
                 {Number(earningsData.totalEarnings || 0).toLocaleString()}
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/20 relative z-10">
+            <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-white/10 relative z-10">
               <div>
-                <p className="text-brand-100 text-xs mb-1">Incentives</p>
-                <p className="font-bold text-lg">
+                <p className="text-white/55 text-[9px] font-bold uppercase tracking-wide">Incentives</p>
+                <p className="font-extrabold text-sm mt-0.5">
                   +{RUPEE}
                   {Number(earningsData.incentives || 0).toLocaleString()}
                 </p>
               </div>
               <div>
-                <p className="text-brand-100 text-xs mb-1">Tips</p>
-                <p className="font-bold text-lg">
+                <p className="text-white/55 text-[9px] font-bold uppercase tracking-wide">Tips</p>
+                <p className="font-extrabold text-sm mt-0.5">
                   +{RUPEE}
                   {Number(earningsData.tipsReceived || 0).toLocaleString()}
                 </p>
@@ -148,49 +160,53 @@ const EarningsPage = () => {
           </div>
         </motion.div>
 
+        {/* Chart */}
         <motion.div variants={itemVariants}>
-          <Card className="p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="font-bold text-gray-800 flex items-center">
-                <TrendingUp size={20} className="mr-2 text-brand-500" />
+          <Card className="p-3.5 rounded-xl shadow-sm border border-gray-100 bg-white">
+            <div className="flex justify-between items-center mb-2.5">
+              <h3 className="font-bold text-gray-800 text-xs flex items-center">
+                <TrendingUp size={16} className="mr-1.5 text-[#1A4516]" />
                 Earnings Trend
               </h3>
-              <Button variant="ghost" size="sm" className="h-8 text-xs">
+              <Button variant="ghost" size="sm" className="h-6 text-[10px] px-2 text-gray-400 hover:text-gray-600">
                 Last 7 Days
               </Button>
             </div>
-            <div className="h-64 w-full">
+            <div className="h-32 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={earningsData.chartData} barSize={20} margin={{ bottom: 20 }}>
+                <BarChart data={earningsData.chartData} barSize={16} margin={{ bottom: -5 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                  <YAxis domain={[0, maxVal > 0 ? 'auto' : 1000]} hide={true} />
                   <XAxis
                     dataKey="name"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 10, fill: "#9ca3af" }}
-                    dy={10}
+                    tick={{ fontSize: 9, fill: "#9ca3af" }}
+                    dy={5}
                   />
                   <Tooltip
-                    cursor={{ fill: "#f9fafb" }}
+                    cursor={{ fill: "#fdfdfd" }}
                     contentStyle={{
-                      borderRadius: "12px",
+                      borderRadius: "8px",
                       border: "none",
-                      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                      fontSize: "10px",
                     }}
                   />
-                  <Bar dataKey="earnings" fill="var(--primary)" radius={[4, 4, 0, 0]} stackId="a" />
-                  <Bar dataKey="incentives" fill="#93c5fd" radius={[4, 4, 0, 0]} stackId="a" />
+                  <Bar dataKey="earnings" fill="#1A4516" radius={[3, 3, 0, 0]} stackId="a" />
+                  <Bar dataKey="incentives" fill="#93c5fd" radius={[3, 3, 0, 0]} stackId="a" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Card>
         </motion.div>
 
+        {/* Recent Transactions */}
         <motion.div variants={itemVariants}>
-          <Card className="overflow-hidden">
-            <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-              <h3 className="font-bold text-gray-800">Recent Earnings</h3>
-              <Button variant="link" className="text-primary text-xs font-bold h-auto p-0">
+          <Card className="overflow-hidden border border-gray-100 rounded-xl shadow-sm bg-white">
+            <div className="p-3 px-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/40">
+              <h3 className="font-bold text-gray-800 text-xs">Recent Earnings</h3>
+              <Button variant="link" className="text-[#1A4516] text-[11px] font-bold h-auto p-0 hover:underline">
                 View All
               </Button>
             </div>
@@ -199,21 +215,21 @@ const EarningsPage = () => {
                 earningsData.recentTransactions.map((txn, idx) => (
                   <div
                     key={txn._id || txn.id || `txn-${idx}`}
-                    className="p-4 flex justify-between items-center hover:bg-gray-50 transition-colors cursor-pointer"
+                    className="p-3 px-4 flex justify-between items-center hover:bg-gray-50/50 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center">
                       <div
-                        className={`p-2 rounded-full mr-3 ${
+                        className={`p-1.5 rounded-full mr-2.5 ${
                           txn.status === "Settled" || txn.status === "Completed"
-                            ? "bg-brand-100 text-brand-600"
-                            : "bg-yellow-100 text-yellow-600"
+                            ? "bg-emerald-50 text-emerald-600"
+                            : "bg-yellow-50 text-yellow-600"
                         }`}
                       >
-                        <ArrowUpRight size={16} />
+                        <ArrowUpRight size={14} />
                       </div>
                       <div>
-                        <p className="font-bold text-gray-900">{txn.type}</p>
-                        <p className="text-xs text-gray-500">
+                        <p className="font-bold text-xs text-gray-900">{txn.type}</p>
+                        <p className="text-[10px] text-gray-400 mt-0.5">
                           {txn.date ||
                             new Date(txn.createdAt).toLocaleDateString("en-IN", {
                               day: "numeric",
@@ -224,23 +240,23 @@ const EarningsPage = () => {
                             (txn._id ? txn._id.toString().slice(-6).toUpperCase() : "N/A")}
                         </p>
                         {resolveTipAmount(txn) > 0 && (
-                          <p className="text-[11px] font-bold text-pink-600">
+                          <p className="text-[9px] font-bold text-pink-600 mt-0.5">
                             Includes tip: {RUPEE}{resolveTipAmount(txn).toLocaleString()}
                           </p>
                         )}
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-gray-900">
+                      <p className="font-bold text-xs text-gray-900">
                         {String(txn.type || "").includes("Withdrawal") ? "-" : "+"}
                         {RUPEE}
                         {Number(txn.amount || 0).toLocaleString()}
                       </p>
                       <p
-                        className={`text-xs font-bold ${
+                        className={`text-[9px] font-bold ${
                           txn.status === "Settled" || txn.status === "Completed"
-                            ? "text-brand-500"
-                            : "text-yellow-500"
+                            ? "text-emerald-600"
+                            : "text-yellow-600"
                         }`}
                       >
                         {txn.status}
@@ -249,14 +265,14 @@ const EarningsPage = () => {
                   </div>
                 ))
               ) : (
-                <div className="p-12 text-center text-gray-400 text-sm italic">
+                <div className="p-8 text-center text-gray-400 text-xs italic">
                   No recent earnings or withdrawals.
                 </div>
               )}
             </div>
           </Card>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 };

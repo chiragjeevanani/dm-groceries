@@ -118,39 +118,39 @@ const Profile = () => {
   return (
     <div className="bg-gray-50/50 min-h-screen pb-24">
       {/* Header */}
-      <div className="bg-primary pt-12 pb-24 px-6 rounded-b-[2.5rem] relative shadow-lg">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-white text-2xl font-bold">My Profile</h1>
+      <div className="bg-[#1A4516] pt-4 pb-12 px-6 rounded-b-[2rem] relative shadow-md">
+        <div className="flex justify-between items-center mb-3">
+          <h1 className="text-white text-lg font-black leading-tight tracking-tight">My Profile</h1>
           <Button
             variant="ghost"
             size="icon"
-            className="text-white hover:bg-white/20"
+            className="text-white hover:bg-white/20 h-8 w-8"
             onClick={() => toast.info("No new notifications")}>
-            <Bell size={24} />
+            <Bell size={18} />
           </Button>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3.5">
           <div className="relative">
-            <div className="w-20 h-20 bg-white rounded-full p-1 shadow-lg">
+            <div className="w-16 h-16 bg-white rounded-full p-0.5 shadow-md">
               <img
                 src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
                 alt="Profile"
                 className="w-full h-full rounded-full object-cover bg-gray-100"
               />
             </div>
-            <div className="absolute bottom-0 right-0 w-6 h-6 bg-brand-500 border-2 border-white rounded-full"></div>
+            <div className="absolute bottom-0 right-0 w-4.5 h-4.5 bg-brand-500 border-2 border-white rounded-full"></div>
           </div>
           <div className="text-white">
-            <h2 className="font-bold text-xl">Rahul Kumar</h2>
-            <p className="text-white/80 text-sm flex items-center mb-1">
-              <Phone size={14} className="mr-1" /> +91 98765 43210
+            <h2 className="font-extrabold text-base leading-snug">Rahul Kumar</h2>
+            <p className="text-white/80 text-xs flex items-center mb-1">
+              <Phone size={12} className="mr-1 shrink-0" /> +91 98765 43210
             </p>
-            <div className="flex items-center space-x-2">
-              <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-medium backdrop-blur-sm">
+            <div className="flex items-center space-x-1.5">
+              <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold backdrop-blur-sm">
                 ID: 882190
               </span>
-              <span className="bg-brand-500 text-primary-foreground px-2 py-0.5 rounded text-xs font-bold shadow-sm">
+              <span className="bg-brand-500 text-primary-foreground px-1.5 py-0.5 rounded text-[9px] font-black shadow-sm tracking-wide">
                 VERIFIED
               </span>
             </div>
@@ -163,19 +163,19 @@ const Profile = () => {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="mx-6 -mt-12 bg-white rounded-2xl p-4 shadow-xl mb-6 flex justify-between text-center relative z-10">
+        className="mx-6 -mt-6 bg-white rounded-2xl p-3 shadow-md mb-6 flex justify-between text-center relative z-10 border border-gray-100/50">
         <div className="flex-1">
-          <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider">
+          <p className="text-gray-400 text-[9px] uppercase font-bold tracking-wider">
             Joined
           </p>
-          <p className="font-bold text-gray-900 text-lg">Jan '24</p>
+          <p className="font-bold text-gray-900 text-sm">Jan '24</p>
         </div>
         <div className="w-px bg-gray-100"></div>
         <div className="flex-1">
-          <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider">
+          <p className="text-gray-400 text-[9px] uppercase font-bold tracking-wider">
             Trips
           </p>
-          <p className="font-bold text-gray-900 text-lg">1,240</p>
+          <p className="font-bold text-gray-900 text-sm">1,240</p>
         </div>
         <div className="w-px bg-gray-100"></div>
         <div className="flex-1">

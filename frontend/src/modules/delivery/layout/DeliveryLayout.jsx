@@ -225,6 +225,12 @@ const DeliveryLayout = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty("--primary", "#1A4516");
+    root.style.setProperty("--primary-color", "#1A4516");
+  }, []);
+
   const hideBottomNavRoutes = [
     "/delivery/login",
     "/delivery/auth",
@@ -232,6 +238,7 @@ const DeliveryLayout = () => {
     "/delivery/navigation",
     "/delivery/confirm-delivery",
     "/delivery/order-details",
+    "/delivery/profile/",
   ];
 
   const shouldShowBottomNav = !hideBottomNavRoutes.some((route) =>
@@ -768,7 +775,7 @@ const DeliveryLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans max-w-md mx-auto relative shadow-2xl overflow-hidden border-x border-gray-100">
+    <div className="h-screen h-[100dvh] bg-gray-50 text-gray-900 font-sans max-w-md mx-auto relative shadow-2xl overflow-hidden border-x border-gray-100">
       {/* Full-screen order alert — portaled so it always stacks above nav/content */}
       {typeof document !== "undefined" &&
         createPortal(
@@ -907,7 +914,7 @@ const DeliveryLayout = () => {
         )}
 
       <main
-        className={`h-full min-h-screen overflow-y-auto ${shouldShowBottomNav ? "pb-24" : ""} no-scrollbar`}>
+        className={`h-full overflow-y-auto ${shouldShowBottomNav ? "pb-16" : ""} no-scrollbar`}>
         <Outlet />
       </main>
 

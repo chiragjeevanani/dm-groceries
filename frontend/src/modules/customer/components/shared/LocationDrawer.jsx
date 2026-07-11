@@ -338,27 +338,36 @@ const LocationDrawer = ({ isOpen, onClose }) => {
           {/* Backdrop */}
           <motion.div
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[600]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[600]"
           />
 
           <motion.div
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            transition={{ type: "spring", damping: 28, stiffness: 220 }}
             data-lenis-prevent
             style={{ overscrollBehavior: "contain" }}
-            className="fixed bottom-0 left-0 right-0 bg-[#F3F4F6] rounded-t-[32px] z-[610] max-h-[90vh] overflow-y-auto outline-none shadow-2xl pb-8">
+            className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-[610] max-h-[90vh] overflow-y-auto outline-none shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pb-8">
+            
+            {/* Drag Handle Indicator */}
+            <div className="w-full flex justify-center pt-3 pb-1 sticky top-0 bg-white z-30">
+              <div className="w-12 h-1.5 bg-slate-200 rounded-full"></div>
+            </div>
+
             {/* Header */}
-            <div className="sticky top-0 bg-[#F3F4F6] px-6 pt-6 pb-4 flex flex-col gap-4 z-20">
+            <div className="sticky top-4 bg-white px-6 pt-2 pb-4 flex flex-col gap-4 z-20">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-extrabold text-[#1A1A1A]">
+                <h2 className="text-xl font-bold text-emerald-950 tracking-tight">
                   Select delivery location
                 </h2>
                 <button
                   onClick={onClose}
-                  className="h-10 w-10 bg-black/5 hover:bg-black/10 rounded-full flex items-center justify-center transition-colors">
-                  <X size={20} className="text-[#1A1A1A]" />
+                  className="h-8 w-8 bg-slate-100 hover:bg-slate-200 hover:rotate-90 rounded-full flex items-center justify-center transition-all duration-300">
+                  <X size={18} className="text-slate-600" />
                 </button>
               </div>
 
@@ -366,8 +375,8 @@ const LocationDrawer = ({ isOpen, onClose }) => {
               <div className="relative group">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
                   <Search
-                    size={20}
-                    className="text-[#1A1A1A]/40 group-focus-within:text-primary transition-colors"
+                    size={18}
+                    className="text-slate-400 group-focus-within:text-primary transition-colors duration-300"
                   />
                 </div>
                 <input
@@ -382,20 +391,26 @@ const LocationDrawer = ({ isOpen, onClose }) => {
                   onBlur={() => {
                     window.setTimeout(() => setIsSearchFocused(false), 120);
                   }}
-                  className="w-full bg-white border-none rounded-2xl py-4 pl-12 pr-4 text-sm font-semibold placeholder:text-[#1A1A1A]/40 shadow-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-11 pr-4 text-[14px] font-medium text-slate-700 placeholder:text-slate-400 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 outline-none"
                 />
+                {searchQuery.length < MIN_QUERY_LENGTH && (
+                  <p className="absolute -bottom-5 left-2 text-[11px] font-medium text-slate-400">
+                    Type at least 4 characters
+                  </p>
+                )}
               </div>
-              <p className="text-[11px] font-semibold text-slate-400 px-1">
-                Type at least 4 characters
-              </p>
             </div>
 
             {/* Options List */}
-            <div className="px-4 flex flex-col gap-3">
+            <div className="px-6 flex flex-col gap-2 mt-3">
               {searchQuery.trim().length >= MIN_QUERY_LENGTH && (
-                <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100 overflow-hidden mb-3">
                   {isSearchingPlaces && placePredictions.length === 0 && (
-                    <div className="px-4 py-3 text-sm font-semibold text-slate-500">
+                    <div className="px-4 py-3 text-sm font-medium text-slate-500 flex items-center gap-3">
+                      <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
                       Searching with Google...
                     </div>
                   )}
@@ -406,18 +421,18 @@ const LocationDrawer = ({ isOpen, onClose }) => {
                       type="button"
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => handleSelectPlace(prediction)}
-                      className="w-full px-4 py-3 text-left hover:bg-slate-50 border-b last:border-b-0 border-slate-100">
+                      className="w-full px-4 py-3 text-left hover:bg-slate-50 border-b last:border-b-0 border-slate-100 transition-colors">
                       <div className="flex items-start gap-3">
                         <MapPin
                           size={16}
                           className="text-primary mt-0.5 flex-shrink-0"
                         />
                         <div className="min-w-0">
-                          <p className="text-[13px] font-bold text-slate-800 truncate">
+                          <p className="text-[13px] font-medium text-emerald-900 truncate">
                             {prediction.structured_formatting?.main_text ||
                               prediction.description}
                           </p>
-                          <p className="text-xs text-slate-500 truncate">
+                          <p className="text-[11px] text-slate-500 truncate mt-0.5">
                             {prediction.structured_formatting?.secondary_text ||
                               prediction.description}
                           </p>
@@ -429,121 +444,132 @@ const LocationDrawer = ({ isOpen, onClose }) => {
                   {!isSearchingPlaces &&
                     placePredictions.length === 0 &&
                     !placesError && (
-                      <div className="px-4 py-3 text-sm font-semibold text-slate-500">
+                      <div className="px-4 py-3 text-sm font-medium text-slate-500">
                         No locations found
                       </div>
                     )}
 
                   {placesError && (
-                    <div className="px-4 py-3 text-sm font-semibold text-amber-700 bg-amber-50">
+                    <div className="px-4 py-3 text-sm font-medium text-red-600 bg-red-50">
                       {placesError}
                     </div>
                   )}
-                </div>
+                </motion.div>
               )}
 
-              {/* Current Location - single onClick to avoid duplicate API calls (was 2x from onPointerDown + onClick) */}
-              <button
-                type="button"
-                data-lenis-prevent
-                data-lenis-prevent-touch
-                onClick={handleSelectCurrentLocation}
-                className="flex items-center gap-4 bg-white p-3 rounded-2xl hover:bg-slate-50 transition-colors group text-left shadow-sm w-full">
-                <div className="h-10 w-10 flex items-center justify-center text-primary">
-                  <MapPin
-                    size={24}
-                    className="group-hover:scale-110 transition-transform"
-                  />
-                </div>
-                <div className="flex-1 flex items-center gap-2 min-w-0">
-                  <h3 className="font-bold text-primary text-[14px] whitespace-nowrap">
-                    {isFetchingLocation
-                      ? "Detecting..."
-                      : "Use current location"}
-                  </h3>
-                  <p className="text-[12px] text-slate-400 font-medium truncate opacity-60">
-                    ({currentLocation.name})
-                  </p>
-                </div>
-                <ChevronRight size={16} className="text-slate-300 flex-shrink-0" />
-              </button>
+              {/* Action Buttons Container */}
+              <div className="flex flex-col gap-2">
+                {/* Current Location */}
+                <button
+                  type="button"
+                  data-lenis-prevent
+                  data-lenis-prevent-touch
+                  onClick={handleSelectCurrentLocation}
+                  className="group relative overflow-hidden flex items-center gap-3 bg-primary/5 hover:bg-primary/10 p-3 rounded-xl transition-all duration-300 text-left border border-primary/10">
+                  <div className="h-8 w-8 bg-white shadow-sm rounded-full flex items-center justify-center text-primary relative z-10">
+                    <MapPin
+                      size={16}
+                      className="group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="flex-1 flex flex-col min-w-0 relative z-10">
+                    <h3 className="font-semibold text-primary text-[14px]">
+                      {isFetchingLocation
+                        ? "Detecting location..."
+                        : "Use current location"}
+                    </h3>
+                    <p className="text-[12px] text-primary/70 font-normal truncate mt-0.5">
+                      {currentLocation.name}
+                    </p>
+                  </div>
+                  <ChevronRight size={16} className="text-primary/40 group-hover:translate-x-1 transition-transform relative z-10" />
+                </button>
 
-              {/* Add Address */}
-              <button
-                onClick={handleAddAddress}
-                className="flex items-center gap-4 bg-white p-3 rounded-2xl hover:bg-slate-50 transition-colors group text-left shadow-sm">
-                <div className="h-10 w-10 flex items-center justify-center text-primary">
-                  <Plus
-                    size={24}
-                    className="group-hover:rotate-90 transition-transform"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-primary text-[15px]">
-                    Add new address
-                  </h3>
-                </div>
-                <ChevronRight size={20} className="text-slate-300" />
-              </button>
+                {/* Add Address */}
+                <button
+                  onClick={handleAddAddress}
+                  className="group flex items-center gap-3 bg-white border border-slate-200 hover:border-slate-300 p-3 rounded-xl transition-all duration-300 text-left shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
+                  <div className="h-8 w-8 bg-slate-50 group-hover:bg-slate-100 rounded-full flex items-center justify-center text-slate-600 transition-colors">
+                    <Plus
+                      size={16}
+                      className="group-hover:rotate-90 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-emerald-900 text-[14px]">
+                      Add new address
+                    </h3>
+                  </div>
+                  <ChevronRight size={16} className="text-slate-400 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
 
               {/* Saved Addresses Section */}
-              <div className="mt-4 px-2">
-                <h4 className="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-4">
-                  Your saved addresses
-                </h4>
+              {visibleSavedAddresses.length > 0 && (
+                <div className="mt-5">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="h-[1px] flex-1 bg-slate-100"></div>
+                    <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                      Saved Addresses
+                    </h4>
+                    <div className="h-[1px] flex-1 bg-slate-100"></div>
+                  </div>
 
-                <div className="flex flex-col gap-4">
-                  {visibleSavedAddresses.map((addr) => (
-                    <div
-                      key={addr.id}
-                      onClick={() => handleSelectAddress(addr)}
-                      className="bg-white p-3 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden group cursor-pointer hover:bg-slate-50 transition-colors">
-                      <div className="flex items-start gap-4">
-                        <div className="h-12 w-12 bg-slate-50 rounded-xl flex items-center justify-center text-yellow-500 flex-shrink-0">
-                          {addr.label === "Home" ? (
-                            <Home
-                              size={26}
-                              fill="currentColor"
-                              className="opacity-80"
-                            />
-                          ) : (
-                            <MapPin
-                              size={26}
-                              fill="currentColor"
-                              className="opacity-80"
-                            />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-bold text-[#1A1A1A] text-lg">
-                              {addr.label}
-                            </h3>
-                            {(addr.address === currentLocation.name ||
-                              addr.isCurrent) && (
-                              <span className="text-[10px] bg-teal-50 text-teal-600 px-2 py-0.5 rounded-full font-bold uppercase tracking-tight border border-teal-100">
-                                You are here
-                              </span>
+                  <div className="flex flex-col gap-2">
+                    {visibleSavedAddresses.map((addr, index) => (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        key={addr.id}
+                        onClick={() => handleSelectAddress(addr)}
+                        className="group bg-white p-3 rounded-xl border border-slate-100 hover:border-primary/30 relative overflow-hidden cursor-pointer shadow-[0_2px_10px_-4px_rgba(0,0,0,0.02)] transition-all duration-300">
+                        
+                        {/* Selected background highlight */}
+                        {(addr.address === currentLocation.name || addr.isCurrent) && (
+                          <div className="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+                        )}
+
+                        <div className="flex items-start gap-3 relative z-10">
+                          <div className="h-10 w-10 bg-slate-50 group-hover:bg-primary/10 rounded-lg flex items-center justify-center text-slate-500 group-hover:text-primary transition-colors flex-shrink-0">
+                            {addr.label === "Home" ? (
+                              <Home size={18} className="opacity-90" />
+                            ) : (
+                              <MapPin size={18} className="opacity-90" />
                             )}
                           </div>
-                          <p className="text-[13px] text-slate-500 font-medium leading-relaxed mb-3">
-                            {addr.address}
-                          </p>
-                          <p className="text-[12px] text-slate-400 font-bold">
-                            Phone number: {addr.phone}
-                          </p>
+                          <div className="flex-1 min-w-0 pt-0.5">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h3 className="font-semibold text-emerald-900 text-[14px]">
+                                {addr.label}
+                              </h3>
+                              {(addr.address === currentLocation.name ||
+                                addr.isCurrent) && (
+                                <span className="text-[9px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold uppercase tracking-tight">
+                                  Selected
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-[12px] text-slate-500 font-normal leading-relaxed mb-1.5 line-clamp-2">
+                              {addr.address}
+                            </p>
+                            <p className="text-[11px] text-slate-400 font-medium flex items-center gap-1.5">
+                              <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                              {addr.phone}
+                            </p>
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Selection Glow */}
-                      {(addr.address === currentLocation.name ||
-                        addr.isCurrent) && (
-                        <div className="absolute top-0 right-0 h-1 w-24 bg-gradient-to-l from-primary to-transparent opacity-50" />
-                      )}
-                    </div>
-                  ))}
+                        {/* Selection Edge Highlight */}
+                        {(addr.address === currentLocation.name ||
+                          addr.isCurrent) && (
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-xl" />
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
         </>

@@ -318,11 +318,11 @@ const DeliveryAuth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F4FF] flex flex-col items-center justify-center p-5 font-['Outfit',_sans-serif]">
+    <div className="min-h-screen bg-[#F2F7F5] flex flex-col items-center justify-center p-5 font-['Outfit',_sans-serif]">
       {/* Background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-32 -left-32 w-80 h-80 bg-brand-200/40 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-brand-200/20 rounded-full blur-3xl" />
       </div>
 
       <motion.div
@@ -332,72 +332,50 @@ const DeliveryAuth = () => {
         className="w-full max-w-[420px] relative z-10"
       >
         {/* Card */}
-        <div className="bg-white rounded-[2.5rem] shadow-[0_24px_60px_rgba(99,102,241,0.1)] border border-brand-50 overflow-hidden">
+        <div className="bg-white rounded-[2.5rem] shadow-[0_24px_60px_rgba(26,69,22,0.08)] border border-brand-50 overflow-hidden pb-6">
 
-          {/* Header with Lottie */}
-          <div className="bg-gradient-to-br from-brand-50 to-purple-50 p-8 flex flex-col items-center relative">
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
-              <div className="w-14 h-14 rounded-2xl bg-white/85 backdrop-blur-sm border border-brand-100 shadow-sm flex items-center justify-center overflow-hidden">
-                {logoUrl ? (
-                  <img
-                    src={logoUrl}
-                    alt={`${appName} logo`}
-                    className="w-10 h-10 object-contain"
-                  />
-                ) : (
-                  <ShieldCheck className="w-5 h-5 text-brand-600" />
-                )}
-              </div>
-            </div>
-            <div className="w-40 h-40">
-              <Lottie animationData={deliveryRiding} loop />
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`${mode}-${step}-title`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                className="text-center mt-3"
-              >
-                <h1 className="text-2xl font-black text-gray-900">
-                  {step === "otp"
-                    ? "Verify OTP"
-                    : mode === "login"
-                      ? "Partner Login"
-                      : "Partner Registration"}
-                </h1>
-                <p className="text-gray-500 text-sm mt-1 max-w-[240px] mx-auto">
-                  {step === "otp"
-                    ? `Enter the 4-digit code sent to +91 ${mode === "login" ? loginPhone : signupPhone}`
-                    : mode === "login"
-                      ? "Login with your registered phone number"
-                      : `Step ${signupStep} of 4: ${signupStep === 1 ? "Personal Info" : signupStep === 2 ? "Vehicle Info" : signupStep === 3 ? "Bank Info" : "Documents"}`}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+          {/* Curved Green Banner */}
+          <div className="relative h-[220px] bg-white overflow-hidden">
+            <svg viewBox="0 0 1440 320" className="absolute top-0 left-0 w-full h-full" preserveAspectRatio="none">
+              <path
+                fill="#1A4516"
+                d="M0,0 L1440,0 L1440,240 Q720,120 0,240 Z"
+              />
+            </svg>
           </div>
 
-          {/* Tab Switch */}
-          {step === "form" && (
-            <div className="flex mx-6 mt-6 bg-gray-100 rounded-2xl p-1">
-              {["login", "signup"].map((m) => (
-                <button
-                  key={m}
-                  onClick={() => switchMode(m)}
-                  className={`flex-1 py-2.5 text-sm font-black rounded-xl transition-all duration-300 ${mode === m
-                    ? "bg-white text-brand-600 shadow-sm"
-                    : "text-gray-400 hover:text-gray-600"
-                    }`}
-                >
-                  {m === "login" ? "Login" : "Join Now"}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Logo Container (No Circle) */}
+          <div className="relative -mt-28 self-center z-10 flex justify-center">
+            <img src="/Logo.png" alt="Logo" className="w-44 h-44 object-contain" />
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${mode}-${step}-title`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="text-center mt-6 px-6"
+            >
+              <h1 className="text-2xl font-black text-[#1A4516] tracking-tight">
+                {step === "otp"
+                  ? "Verify OTP"
+                  : mode === "login"
+                    ? "Welcome Back!"
+                    : "Join Our Team"}
+              </h1>
+              <p className="text-gray-500 text-sm mt-1.5 max-w-[280px] mx-auto">
+                {step === "otp"
+                  ? `Enter the 4-digit code sent to +91 ${mode === "login" ? loginPhone : signupPhone}`
+                  : mode === "login"
+                    ? "Login to continue your deliveries"
+                    : `Step ${signupStep} of 4: ${signupStep === 1 ? "Personal Info" : signupStep === 2 ? "Vehicle Info" : signupStep === 3 ? "Bank Info" : "Documents"}`}
+              </p>
+            </motion.div>
+          </AnimatePresence>
 
           {/* Form Body */}
-          <div className="p-6 pt-4">
+          <div className="p-6 pt-2">
             <AnimatePresence mode="wait">
               {step === "form" && (
                 <motion.div
@@ -445,7 +423,7 @@ const DeliveryAuth = () => {
                               />
                               <label
                                 htmlFor="profile-upload"
-                                className="absolute -bottom-2 -right-2 p-2.5 bg-black  text-primary-foreground rounded-2xl shadow-lg shadow-brand-200 cursor-pointer hover:bg-brand-700 hover:scale-110 active:scale-95 transition-all"
+                                className="absolute -bottom-2 -right-2 p-2.5 bg-brand-600 text-primary-foreground rounded-2xl shadow-lg shadow-brand-200 cursor-pointer hover:bg-brand-700 hover:scale-110 active:scale-95 transition-all"
                               >
                                 <Camera className="w-4 h-4" />
                               </label>
@@ -454,7 +432,7 @@ const DeliveryAuth = () => {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Full Name</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Full Name</label>
                             <div className="relative">
                               <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                               <input
@@ -468,7 +446,7 @@ const DeliveryAuth = () => {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Phone Number</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Phone Number</label>
                             <div className="relative">
                               <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                               <span className="absolute left-10 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-sm border-r border-gray-200 pr-2.5">+91</span>
@@ -484,7 +462,7 @@ const DeliveryAuth = () => {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Email Address</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Email Address</label>
                             <div className="relative">
                               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                               <input
@@ -498,7 +476,7 @@ const DeliveryAuth = () => {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Permanent Address</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Permanent Address</label>
                             <div className="relative">
                               <MapPin className="absolute left-4 top-4 text-gray-300 w-4 h-4" />
                               <textarea
@@ -522,7 +500,7 @@ const DeliveryAuth = () => {
                               }
                               setSignupStep(2);
                             }}
-                            className="w-full py-4 bg-black  text-primary-foreground rounded-2xl text-sm font-black tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
+                            className="w-full py-4 bg-brand-600 text-primary-foreground rounded-2xl text-sm font-semibold tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
                           >
                             Next Step <ArrowRight className="w-4 h-4" />
                           </button>
@@ -537,7 +515,7 @@ const DeliveryAuth = () => {
                           className="space-y-4"
                         >
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Vehicle Type</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Vehicle Type</label>
                             <div className="relative">
                               <Bike className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                               <button
@@ -572,7 +550,7 @@ const DeliveryAuth = () => {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Vehicle Plate Number</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Vehicle Plate Number</label>
                             <div className="relative">
                               <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                               <input
@@ -586,7 +564,7 @@ const DeliveryAuth = () => {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Driving License Number</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Driving License Number</label>
                             <div className="relative">
                               <FileText className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
                               <input
@@ -611,14 +589,14 @@ const DeliveryAuth = () => {
                                 if (!signupVehicleNumber) {
                                   toast.error("Please enter your vehicle plate number");
                                   return;
-                                }
+                                  }
                                 if (!signupDLNumber) {
                                   toast.error("Please enter your driving license number");
                                   return;
                                 }
                                 setSignupStep(3);
                               }}
-                              className="flex-[2] py-4 bg-black  text-primary-foreground rounded-2xl text-sm font-black tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
+                              className="flex-[2] py-4 bg-brand-600 text-primary-foreground rounded-2xl text-sm font-semibold tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
                             >
                               Next Step <ArrowRight className="w-4 h-4" />
                             </button>
@@ -634,7 +612,7 @@ const DeliveryAuth = () => {
                           className="space-y-4"
                         >
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Aadhar Number</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Aadhar Number</label>
                             <input
                               type="text"
                               value={signupAadharNumber}
@@ -644,7 +622,7 @@ const DeliveryAuth = () => {
                             />
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">PAN Card Number</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">PAN Card Number</label>
                             <input
                               type="text"
                               value={signupPanNumber}
@@ -654,7 +632,7 @@ const DeliveryAuth = () => {
                             />
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Account Holder Name</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Account Holder Name</label>
                             <input
                               type="text"
                               value={signupAccountHolder}
@@ -664,7 +642,7 @@ const DeliveryAuth = () => {
                             />
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Account Number</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">Account Number</label>
                             <input
                               type="text"
                               value={signupAccountNumber}
@@ -674,7 +652,7 @@ const DeliveryAuth = () => {
                             />
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">IFSC Code</label>
+                            <label className="text-xs font-black text-brand-700 uppercase tracking-widest ml-1">IFSC Code</label>
                             <input
                               type="text"
                               value={signupIfsc}
@@ -707,7 +685,7 @@ const DeliveryAuth = () => {
                                 }
                                 setSignupStep(4);
                               }}
-                              className="flex-[2] py-4 bg-black  text-primary-foreground rounded-2xl text-sm font-black tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
+                              className="flex-[2] py-4 bg-brand-600 text-primary-foreground rounded-2xl text-sm font-semibold tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2"
                             >
                               Next Step <ArrowRight className="w-4 h-4" />
                             </button>
@@ -898,7 +876,7 @@ const DeliveryAuth = () => {
                             <button
                               onClick={handleSendOtp}
                               disabled={loading || dlVerified !== true || panVerified !== true || aadharVerified !== true}
-                              className="flex-[2] py-4 bg-black  text-primary-foreground rounded-2xl text-sm font-black tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                              className="flex-[2] py-4 bg-brand-600 text-primary-foreground rounded-2xl text-sm font-semibold tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
                             >
                               {loading ? (
                                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -926,11 +904,11 @@ const DeliveryAuth = () => {
                     <div className="space-y-4">
                       {/* Phone */}
                       <div className="space-y-1.5">
-                        <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                        <label className="text-xs font-black text-[#1A4516] uppercase tracking-widest ml-1">
                           Phone Number
                         </label>
                         <div className="relative">
-                          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
+                          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                           <span className="absolute left-10 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-sm border-r border-gray-200 pr-2.5">
                             +91
                           </span>
@@ -942,8 +920,8 @@ const DeliveryAuth = () => {
                               setLoginPhone(val);
                             }}
                             maxLength={10}
-                            className="w-full pl-24 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-400 transition-all placeholder:text-gray-300"
-                            placeholder="00000 00000"
+                            className="w-full pl-24 pr-4 py-3.5 bg-white border border-gray-200 rounded-2xl text-sm font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500/10 focus:border-[#1A4516] transition-all placeholder:text-gray-300"
+                            placeholder="98765 43210"
                           />
                         </div>
                       </div>
@@ -951,14 +929,25 @@ const DeliveryAuth = () => {
                       <button
                         onClick={handleSendOtp}
                         disabled={loading}
-                        className="w-full py-4 bg-black  text-primary-foreground rounded-2xl text-sm font-black tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-60"
+                        className="w-full py-4 bg-[#1A4516] text-white rounded-2xl text-sm font-semibold tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-[#0f2d0f] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 mt-4 disabled:opacity-60"
                       >
                         {loading ? (
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
-                          <>Login Now <ArrowRight className="w-4 h-4" /></>
+                          <>Login <ArrowRight className="w-4 h-4" /></>
                         )}
                       </button>
+
+                      <p className="text-center text-sm text-gray-500 mt-6 font-medium">
+                        Don't have an account?{" "}
+                        <button
+                          type="button"
+                          onClick={() => switchMode("signup")}
+                          className="text-[#1A4516] font-bold hover:underline"
+                        >
+                          Register
+                        </button>
+                      </p>
                     </div>
                   )}
                 </motion.div>
@@ -989,7 +978,7 @@ const DeliveryAuth = () => {
                           value={digit}
                           onChange={(e) => handleOtpChange(index, e.target.value)}
                           onKeyDown={(e) => handleKeyDown(index, e)}
-                          className="w-14 h-14 text-center text-2xl font-black border-2 border-gray-100 rounded-2xl focus:border-brand-500 focus:ring-4 focus:ring-brand-100 outline-none transition-all bg-gray-50 text-gray-900"
+                          className="w-14 h-14 text-center text-2xl font-black border-2 border-gray-100 rounded-2xl focus:border-[#1A4516] focus:ring-4 focus:ring-green-100 outline-none transition-all bg-gray-50 text-gray-900"
                         />
                       ))}
                     </div>
@@ -999,12 +988,12 @@ const DeliveryAuth = () => {
                   <div className="text-center">
                     {timer > 0 ? (
                       <p className="text-gray-400 text-sm font-medium">
-                        Resend code in <span className="text-brand-600 font-bold">{timer}s</span>
+                        Resend code in <span className="text-[#1A4516] font-bold">{timer}s</span>
                       </p>
                     ) : (
                       <button
                         onClick={handleSendOtp}
-                        className="text-brand-600 font-black text-sm uppercase tracking-wide hover:underline"
+                        className="text-[#1A4516] font-black text-sm uppercase tracking-wide hover:underline"
                       >
                         Resend OTP
                       </button>
@@ -1018,12 +1007,12 @@ const DeliveryAuth = () => {
                       type="checkbox"
                       checked={agreed}
                       onChange={(e) => setAgreed(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 accent-brand-600 cursor-pointer"
+                      className="mt-0.5 h-4 w-4 accent-[#1A4516] cursor-pointer"
                     />
                     <label htmlFor="terms" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
                       I confirm my phone number is correct and I agree to the{" "}
-                      <span className="text-brand-600 font-bold">Terms of Service</span> &amp;{" "}
-                      <span className="text-brand-600 font-bold">Privacy Policy</span>.
+                      <span className="text-[#1A4516] font-bold">Terms of Service</span> &amp;{" "}
+                      <span className="text-[#1A4516] font-bold">Privacy Policy</span>.
                     </label>
                   </div>
 
@@ -1031,7 +1020,7 @@ const DeliveryAuth = () => {
                   <button
                     onClick={handleVerifyOtp}
                     disabled={!agreed || otp.some((d) => !d) || loading}
-                    className="w-full py-4 bg-black  text-primary-foreground rounded-2xl text-sm font-black tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-brand-700 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full py-4 bg-[#1A4516] text-white rounded-2xl text-sm font-semibold tracking-widest uppercase shadow-lg shadow-brand-200 hover:bg-[#0f2d0f] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {loading ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
