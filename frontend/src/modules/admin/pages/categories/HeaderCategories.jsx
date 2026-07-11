@@ -282,7 +282,7 @@ const HeaderCategories = () => {
         </div>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 bg-black text-primary-foreground px-4 py-2 rounded-lg hover:bg-brand-700 transition-colors">
+          className="flex items-center gap-2 bg-[#154D1A] text-primary-foreground px-4 py-2 rounded-lg hover:bg-[#1A4516] transition-colors">
           <Plus className="w-5 h-5" />
           Add New Header
         </button>
@@ -305,7 +305,7 @@ const HeaderCategories = () => {
               placeholder="Search header categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
             />
           </div>
         </div>
@@ -317,7 +317,7 @@ const HeaderCategories = () => {
                 <th className="w-12 py-3 px-4 text-left">
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
+                    className="rounded border-gray-300 text-[#154D1A] focus:ring-emerald-500"
                     checked={
                       selectedItems.length > 0 &&
                       categories.length > 0 &&
@@ -370,7 +370,7 @@ const HeaderCategories = () => {
                     <td className="py-3 px-4">
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
+                        className="rounded border-gray-300 text-[#154D1A] focus:ring-emerald-500"
                         checked={selectedItems.includes(cat._id || cat.id)}
                         onChange={() => handleSelect(cat._id || cat.id)}
                       />
@@ -378,7 +378,7 @@ const HeaderCategories = () => {
                     <td className="py-3 px-4">
                       <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex items-center justify-center border border-gray-200">
                         {cat.iconId && iconComponents[cat.iconId] ? (
-                          <div className="w-6 h-6 text-brand-600 flex items-center justify-center">
+                          <div className="w-6 h-6 text-[#154D1A] flex items-center justify-center">
                             {(() => {
                               const IconComp = iconComponents[cat.iconId];
                               return <IconComp fontSize="medium" />;
@@ -386,7 +386,7 @@ const HeaderCategories = () => {
                           </div>
                         ) : cat.iconId && getIconSvg(cat.iconId) ? (
                           <div
-                            className="w-6 h-6 text-brand-600"
+                            className="w-6 h-6 text-[#154D1A]"
                             dangerouslySetInnerHTML={{
                               __html: getIconSvg(cat.iconId),
                             }}
@@ -423,7 +423,7 @@ const HeaderCategories = () => {
                     <td className="py-3 px-4 text-right space-x-2">
                       <button
                         onClick={() => openEditModal(cat)}
-                        className="p-1 text-gray-500 hover:text-brand-600 transition-colors">
+                        className="p-1 text-gray-500 hover:text-[#154D1A] transition-colors">
                         <Edit className="w-5 h-5" />
                       </button>
                       <button
@@ -488,9 +488,9 @@ const HeaderCategories = () => {
                   <div className="flex gap-4">
                     {/* SVG Icon Display */}
                     <div className="flex flex-col items-center gap-2">
-                      <div className="w-24 h-24 rounded-full bg-linear-to-br from-brand-50 to-purple-50 border-2 border-brand-200 flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-full bg-linear-to-br from-emerald-50 to-purple-50 border-2 border-emerald-200 flex items-center justify-center">
                         {formData.iconId && iconComponents[formData.iconId] ? (
-                          <div className="w-12 h-12 text-brand-600 flex items-center justify-center">
+                          <div className="w-12 h-12 text-[#154D1A] flex items-center justify-center">
                             {(() => {
                               const IconComp = iconComponents[formData.iconId];
                               return <IconComp fontSize="large" />;
@@ -498,19 +498,19 @@ const HeaderCategories = () => {
                           </div>
                         ) : formData.iconId && getIconSvg(formData.iconId) ? (
                           <div
-                            className="w-12 h-12 text-brand-600"
+                            className="w-12 h-12 text-[#154D1A]"
                             dangerouslySetInnerHTML={{
                               __html: getIconSvg(formData.iconId),
                             }}
                           />
                         ) : (
-                          <Sparkles className="w-10 h-10 text-brand-300" />
+                          <Sparkles className="w-10 h-10 text-emerald-300" />
                         )}
                       </div>
                       <button
                         type="button"
                         onClick={() => setIsIconSelectorOpen(true)}
-                        className="px-3 py-1.5 text-sm bg-black text-primary-foreground rounded-lg hover:bg-brand-700 transition-colors">
+                        className="px-3 py-1.5 text-sm bg-[#154D1A] text-primary-foreground rounded-lg hover:bg-[#1A4516] transition-colors">
                         {formData.iconId ? 'Change Icon' : 'Select Icon'}
                       </button>
                     </div>
@@ -524,7 +524,7 @@ const HeaderCategories = () => {
                     <div className="flex flex-col items-center gap-2">
                       <div
                         onClick={() => fileInputRef.current?.click()}
-                        className="w-24 h-24 rounded-full bg-gray-50 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-brand-500 overflow-hidden transition-colors">
+                        className="w-24 h-24 rounded-full bg-gray-50 border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-emerald-600 overflow-hidden transition-colors">
                         {previewUrl ? (
                           <img
                             src={previewUrl}
@@ -584,7 +584,7 @@ const HeaderCategories = () => {
                             headerColor: e.target.value,
                           })
                         }
-                        className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20"
+                        className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                         placeholder="#FF1E1E"
                       />
                     </div>
@@ -617,7 +617,7 @@ const HeaderCategories = () => {
                             headerFontColor: e.target.value,
                           })
                         }
-                        className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20"
+                        className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                         placeholder="#FFFFFF"
                       />
                     </div>
@@ -650,7 +650,7 @@ const HeaderCategories = () => {
                             headerIconColor: e.target.value,
                           })
                         }
-                        className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20"
+                        className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                         placeholder="#111111"
                       />
                     </div>
@@ -671,7 +671,7 @@ const HeaderCategories = () => {
                         slug: makeSlug(e.target.value),
                       })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
                     placeholder="e.g., Electronics"
                   />
                 </div>
@@ -684,7 +684,7 @@ const HeaderCategories = () => {
                     type="text"
                     value={formData.slug}
                     readOnly
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
                     placeholder="e.g., electronics"
                   />
                 </div>
@@ -698,7 +698,7 @@ const HeaderCategories = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, status: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </select>
@@ -715,7 +715,7 @@ const HeaderCategories = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, adminCommission: e.target.value })
                       }
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
                       placeholder="0"
                       min="0"
                       max="100"
@@ -731,7 +731,7 @@ const HeaderCategories = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, handlingFees: e.target.value })
                       }
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
                       placeholder="0"
                       min="0"
                     />
@@ -748,7 +748,7 @@ const HeaderCategories = () => {
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="px-4 py-2 bg-black text-primary-foreground rounded-lg hover:bg-brand-700 font-medium disabled:opacity-50 flex items-center gap-2">
+                  className="px-4 py-2 bg-[#154D1A] text-primary-foreground rounded-lg hover:bg-[#1A4516] font-medium disabled:opacity-50 flex items-center gap-2">
                   {isSaving && (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   )}

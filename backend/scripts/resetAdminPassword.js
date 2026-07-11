@@ -16,8 +16,8 @@ const resetAdminPassword = async () => {
     await mongoose.connect(mongoUri);
     console.log('✓ Connected to MongoDB\n');
 
-    const email = 'ankit1@gmail.com';
-    const newPassword = 'Admin!@#123';
+    const email = 'admin@admin.com';
+    const newPassword = 'Password123!';
 
     // Find admin by email
     const admin = await Admin.findOne({ email });
